@@ -1,7 +1,7 @@
 # urchin
 PGA to CSV Converter
 
-A utitlity to handle Hitachi GXH Series machine program files.
+A utility to handle Hitachi GXH Series machine program files.
 
 Inputs file with a `.pga` extension.
 Outputs a formatted pick and place CSV file and overall board information and parts list as plain text files.
