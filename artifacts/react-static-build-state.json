@@ -1,0 +1,62 @@
+{
+  "prefetchRate": 5,
+  "maxThreads": null,
+  "disableRoutePrefixing": false,
+  "outputFileRate": 100,
+  "extensions": [
+    ".js",
+    ".jsx"
+  ],
+  "minLoadTime": 200,
+  "disablePreload": false,
+  "disableRuntime": false,
+  "preloadPollInterval": 300,
+  "productionSourceMaps": false,
+  "silent": false,
+  "entry": "index.js",
+  "plugins": [
+    [
+      "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-source-filesystem/node.api.js",
+      {
+        "location": "/mnt/c/Users/Scuba/Sites/urchin/src/pages"
+      }
+    ],
+    "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-reach-router/browser.api.js",
+    "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-sitemap/dist/node.api.js",
+    "/mnt/c/Users/Scuba/Sites/urchin"
+  ],
+  "paths": {
+    "ROOT": "/mnt/c/Users/Scuba/Sites/urchin",
+    "SRC": "/mnt/c/Users/Scuba/Sites/urchin/src",
+    "DIST": "/mnt/c/Users/Scuba/Sites/urchin/dist",
+    "ASSETS": "/mnt/c/Users/Scuba/Sites/urchin/dist",
+    "PLUGINS": "/mnt/c/Users/Scuba/Sites/urchin/plugins",
+    "TEMP": "/mnt/c/Users/Scuba/Sites/urchin/tmp",
+    "ARTIFACTS": "/mnt/c/Users/Scuba/Sites/urchin/artifacts",
+    "PUBLIC": "/mnt/c/Users/Scuba/Sites/urchin/public",
+    "NODE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin/node_modules",
+    "EXCLUDE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin/node_modules",
+    "PACKAGE": "/mnt/c/Users/Scuba/Sites/urchin/package.json",
+    "HTML_TEMPLATE": "/mnt/c/Users/Scuba/Sites/urchin/dist/index.html",
+    "STATIC_DATA": "/mnt/c/Users/Scuba/Sites/urchin/dist/staticData"
+  },
+  "siteRoot": "/",
+  "basePath": "",
+  "publicPath": "/",
+  "assetsPath": "",
+  "extractCssChunks": false,
+  "inlineCss": false,
+  "babelExcludes": [],
+  "devServer": {
+    "host": "localhost",
+    "port": 3000
+  },
+  "terser": {
+    "terserOptions": {
+      "mangle": {},
+      "parse": {},
+      "compress": {},
+      "output": {}
+    }
+  }
+}

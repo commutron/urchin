@@ -1,0 +1,27 @@
+{
+  "name": "PGA²CSV",
+  "short_name": "PGA²CSV",
+  "description": "Convert a Hitachi PGA program file into CSV and plain text",
+  "dir": "ltr",
+  "lang": "English",
+  "start_url": "/",
+  "background_color": "#ce6a85",
+  "display": "standalone",
+  "orientation": "portrait", 
+  "scope": "/",
+  "theme_color": "#ce6a85",
+  "icons": [
+    {
+      "src": "/pga-circle-pink-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pga-circle-pink-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}

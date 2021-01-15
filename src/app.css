@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+@-moz-document url-prefix() {
+  body {
+    font-weight: bold !important;
+  }
+}
+
+body {
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 300;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+header{
+  height: 10vh;
+  margin: 0;
+  padding: 0 3vw;
+  background-color: #ce6a85;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+header h1 { 
+  font-size: 6vh;
+}
+main {
+  height: 83vh;
+  width: 100vw;
+  padding: 1vh 1vw;
+}
+
+section {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1vh double #2f2f2f;
+  padding: 5vh 5vw;
+}
+.stickyNav {
+  position: sticky;
+  top: 0;
+  float: right;
+}
+footer {
+  height: 7vh;
+  width: 100vw;
+  padding: 0 3vw;
+  overflow: hidden;
+  background-color: #2f2f2f;
+  color: white;
+  font-size: 2vh;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.centre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.dropZone {
+  border: 2vmin dashed rgba(206, 106, 133, 0.4);
+  width: 100%;
+  height: 100%;
+  padding: 5vh 5vw;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(206, 109, 139, 0.3); }
+}
+
+.fileInput { opacity: 0; }
+.fileInput, .dropiconWrap {
+  height: 70vmin;
+  width: 70vmin;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+.dropiconWrap {
+  position:relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(206, 106, 133, 0.4);
+}
+.dropiconWrap.work {
+  transform: rotate(5deg);
+  transition: all 500ms ease;
+  animation: pulse 0.5s;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 0 1vmax white,
+              0 0 0 2vmax rgba(206, 109, 139, 0.3);
+}
+.dropiconWrap:before, .dropicon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dropiconWrap:before {
+  content: ".PGA";
+  color: rgb(152, 82, 119);
+  font-size: 7vmin;
+  font-weight: 600;
+}
+.dropicon {  
+  transition: all 250ms ease;
+  fill: rgb(152, 82, 119);
+}
+.dropiconWrap:active .dropicon,
+.dropiconWrap:focus-within .dropicon,
+.dropiconWrap:focus .dropicon { 
+  filter: drop-shadow(1px 1px 20px rgb(206, 106, 133));
+}
+
+.errorZone {
+  padding: 5vh 5vw;
+}
+.errorZone > svg:first-of-type {
+  fill: #2f2f2f;
+  color: #2f2f2f;
+}
+.errorZone > h2 {
+  font-size: 5vh;
+  margin: 0 0 2vh 0;
+  text-align: center;
+}
+.erroriconWrap {
+  max-height: 70vh;
+}
+.erroricon {
+  height: 45vh;
+}
+
+.outputZone {
+  margin: 5vh 5vw 0 5vw;
+}
+.outputZone p {
+  margin: 0;
+  font-size: 3vh;
+}
+.outputLine {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2vh 0;
+  border-top: 2px groove #ce6a85;
+  padding: 5vh 3vw;
+}
+.outputLine > b {
+  font-size: 3vh;
+}
+.outputLine > span {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.doAction {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 6vh;
+  min-width: 6vh;
+  margin: 0 2vw;
+  padding: 0.5vh;
+  font-size: 2.5vh;
+  background: #ce6a85;
+  border: 5px solid #ce6a85;
+  border-radius: 10px;
+  transition: all 100ms ease-out 75ms;
+  box-shadow: 0px 1px 0px 1px #985277,
+              0px 1px 15px -5px #2f2f2f;
+}
+.doAction:hover, .doAction:focus, .doAction:active {
+  box-shadow: 0px 8px 0px 0px #985277,
+              0px 10px 0px 0px #985277,
+              0px 12px 0px 0px #985277,
+              0px 14px 15px -5px #2f2f2f;
+  outline: none;
+}
+
+.navAction {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 6vh;
+  min-width: 6vh;
+  margin: 0 1vw;
+  padding: 0.5vh 1vh;
+  font-size: 2vh;
+  font-weight: 400;
+  background: #2f2f2f;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  transition: all 100ms ease-out 75ms;
+}
+.navAction svg {
+  fill: white;
+  stroke: white;
+}
+.navAction:hover, .navAction:active {
+  box-shadow: 0 0 0 0.5vh #2f2f2f;
+}
