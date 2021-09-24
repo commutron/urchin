@@ -126,20 +126,20 @@ const TheWork = ()=> {
         <h3>${bd?.topTitle}</h3>
         <h3>${bd?.subTitle}</h3>
         <table style="${tbSy}">
-          <tr><th colspan="2" style="${hclSy}">Board</th></th><tr>
+          <tr><th colspan="2" style="${hclSy}">Board</th><tr>
           <tr><td style="${clSy}">X</td><td style="${clSy}"><big>${bd?.bX}</big></td></tr>
           <tr><td style="${clSy}">Y</td><td style="${clSy}"><big>${bd?.bY}</big></td></tr>
           <tr><td style="${clSy}">T</td><td style="${clSy}"><big>${bd?.bT}</big></td></tr>
-          <tr><th colspan="2" style="${hclSy}">Orgin Offsets</th></th><tr>
+          <tr><th colspan="2" style="${hclSy}">Orgin Offsets</th><tr>
           <tr><td style="${clSy}">X</td><td style="${clSy}"><big>${bd?.orginX}</big></td></tr>
           <tr><td style="${clSy}">Y</td><td style="${clSy}"><big>${bd?.orginY}</big></td></tr>
-          <tr><th colspan="2" style="${hclSy}">Fiducial Mark Size</th></th><tr>
+          <tr><th colspan="2" style="${hclSy}">Fiducial Mark Size</th><tr>
           <tr><td style="${clSy}">Fid1</td><td style="${clSy}"><big>${bd?.fMark1}</big></td></tr>
           <tr><td style="${clSy}">Fid2</td><td style="${clSy}"><big>${bd?.fMark2}</big></td></tr>
         </table>
         <br />
         <table style="${tbSy}">
-          <tr><th colspan="4" style="${hclSy}">Panel Offsets</th></th><tr>
+          <tr><th colspan="4" style="${hclSy}">Panel Offsets</th><tr>
           ${bd.oDataMap ? bd.oDataMap.map(function (line, index) {
             return `<tr>
             <td>${index+1}</td>
