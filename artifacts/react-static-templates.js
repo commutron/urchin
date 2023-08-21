@@ -14,14 +14,14 @@ const universalOptions = {
   ignoreBabelRename: true
 }
 
-const t_0 = universal(import('__react_static_root__/src/pages/404.js'), universalOptions)
-      t_0.template = '__react_static_root__/src/pages/404.js'
+const t_0 = universal(import('__react_static_root__/node_modules/react-static/lib/browser/components/Default404'), universalOptions)
+      t_0.template = '__react_static_root__/node_modules/react-static/lib/browser/components/Default404'
       
 
 // Template Map
 export default {
-  '__react_static_root__/src/pages/404.js': t_0
+  '__react_static_root__/node_modules/react-static/lib/browser/components/Default404': t_0
 }
 // Not Found Template
-export const notFoundTemplate = "__react_static_root__/src/pages/404.js"
+export const notFoundTemplate = "__react_static_root__/node_modules/react-static/lib/browser/components/Default404"
 

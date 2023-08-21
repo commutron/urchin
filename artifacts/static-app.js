@@ -42,12 +42,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	// Since all referenced chunks are already included
-/******/ 	// in this file, this function is empty here.
-/******/ 	__webpack_require__.e = function requireEnsure() {
-/******/ 		return Promise.resolve();
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -647,42 +641,116 @@ var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_)
 // EXTERNAL MODULE: external "react-static"
 var external_react_static_ = __webpack_require__(3);
 
-// EXTERNAL MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/app.css
+// EXTERNAL MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/app.css
 var app = __webpack_require__(37);
 
 // EXTERNAL MODULE: external "@babel/runtime/helpers/slicedToArray"
 var slicedToArray_ = __webpack_require__(1);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray_);
 
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/scripts/dataInputExtract.js
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/dataInputExtractHitachi.js
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // import lodash from 'lodash';
-function dataInputExtract(rawText, sendUpName, sendUpBoard, sendUpPlace, sendUpParts, sendUpError) {
+var asMap = function asMap(arr) {
+  var multidmn = [];
+
+  if (arr) {
+    var _iterator = _createForOfIteratorHelper(arr),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var line = _step.value;
+
+        if (line && line != '\r') {
+          // maps start with ['\r'] and end with ['']
+          multidmn.push(line.replace("\r", "").split(","));
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }
+
+  return multidmn;
+};
+
+function dataInputExtractHitachi(rawText, sendUp) {
   try {
     if (rawText && typeof rawText.split(/\n/g)[2] == 'string') {
-      var _rawText$split, _rawText$split$, _coreCut$, _coreCut$$trim, _coreData$, _coreData$2, _coreData$3, _coreData$4, _coreCut$2, _recCut$, _recCut$$trim, _recCut$$trim$split$, _recCut$2, _markCut$, _markCut$2, _f0Cut$, _f1Cut$, _f1Cut$2, _f2Cut$, _f2Cut$2, _f3Cut$, _f3Cut$2, _f4Cut$, _f4Cut$2, _f5Cut$, _f5Cut$2, _uCut2$, _uArr$, _fmarkArr$findex, _fmarkArr$findex2, _uCut2$2, _uCut2$2$split$, _oData$split;
+      var _rawText$split, _rawText$split$, _coreCut$, _coreCut$$trim, _coreData$, _coreData$2, _coreData$3, _coreData$4, _coreCut$2, _recCut$, _recCut$$trim, _recog$, _recog$2, _recCut$2, _markCut$, _markCut$2, _markCut$2$split, _markCut$2$split$, _markCut$2$split$$spl, _OPEGmap$, _OPEGmap$2, _markCut$3, _f0Cut$, _f1Cut$, _f1Cut$2, _f2Cut$, _f2Cut$2, _f3Cut$, _f3Cut$2, _f4Cut$, _f4Cut$2, _f5Cut$, _f5Cut$2, _uCut2$, _fmarkMap$findex, _fmarkMap$findex2, _fmarkMap$findex3, _uCut2$2, _uCut2$2$split$, _oData$split;
 
       var fileName = (_rawText$split = rawText.split(',', 1)) === null || _rawText$split === void 0 ? void 0 : _rawText$split[0];
       var coreCut = (_rawText$split$ = rawText.split(':CORE', 2)[1]) === null || _rawText$split$ === void 0 ? void 0 : _rawText$split$.split(':RECOG');
       var coreData = (_coreCut$ = coreCut[0]) === null || _coreCut$ === void 0 ? void 0 : (_coreCut$$trim = _coreCut$.trim()) === null || _coreCut$$trim === void 0 ? void 0 : _coreCut$$trim.split(/\n/g);
       var topTitle = (_coreData$ = coreData[0]) === null || _coreData$ === void 0 ? void 0 : _coreData$.split(",")[0];
       var subTitle = (_coreData$2 = coreData[0]) === null || _coreData$2 === void 0 ? void 0 : _coreData$2.split(",")[1];
-      var gBadMark = (_coreData$3 = coreData[2]) === null || _coreData$3 === void 0 ? void 0 : _coreData$3.split(",");
-      var gBadX = Number(gBadMark[4]);
-      var gBadY = Number(gBadMark[5]);
-      var boardSize = (_coreData$4 = coreData[1]) === null || _coreData$4 === void 0 ? void 0 : _coreData$4.split(",");
+      var boardSize = (_coreData$3 = coreData[1]) === null || _coreData$3 === void 0 ? void 0 : _coreData$3.split(",");
       var bX = Number(boardSize[0]);
       var bY = Number(boardSize[1]);
       var bT = Number(boardSize[2]);
       var orginX = Number(boardSize[3]);
       var orginY = Number(boardSize[4]);
+      var zDeg = Number(boardSize[5]);
+      var pcbHt = Number(boardSize[6]);
+      var gBadMark = (_coreData$4 = coreData[2]) === null || _coreData$4 === void 0 ? void 0 : _coreData$4.split(",");
+      var gBadModeLocal = gBadMark[0]; // bad mark mode
+
+      var gBadImgLocal = gBadMark[1]; // image/color 0=black 1=white
+      // gBadMark[2]
+
+      var gBadModeOvrll = gBadMark[3]; // overall pcb bbr mode
+
+      var gBadX = Number(gBadMark[4]); // overall pcb bbr X
+
+      var gBadY = Number(gBadMark[5]); // overall pcb bbr Y
+
+      var gBadSqnc = gBadMark[6]; // sequence 0=badmark 1= recog 2=global
+
+      var gBadImgOvrll = gBadMark[18]; // overall image/color 0=black 1=white
+
       var recCut = (_coreCut$2 = coreCut[1]) === null || _coreCut$2 === void 0 ? void 0 : _coreCut$2.split(':MARK', 2);
-      var globalFid = (_recCut$ = recCut[0]) === null || _recCut$ === void 0 ? void 0 : (_recCut$$trim = _recCut$.trim()) === null || _recCut$$trim === void 0 ? void 0 : (_recCut$$trim$split$ = _recCut$$trim.split(/\n/g)[1]) === null || _recCut$$trim$split$ === void 0 ? void 0 : _recCut$$trim$split$.split(",");
-      var useGlobal = Number(globalFid === null || globalFid === void 0 ? void 0 : globalFid.slice(0, 1)) ? true : false;
+      var recog = (_recCut$ = recCut[0]) === null || _recCut$ === void 0 ? void 0 : (_recCut$$trim = _recCut$.trim()) === null || _recCut$$trim === void 0 ? void 0 : _recCut$$trim.split(/\n/g);
+      var setupFids = (_recog$ = recog[0]) === null || _recog$ === void 0 ? void 0 : _recog$.split(",");
+      var recEnable = setupFids[0]; // 1=enable
+
+      var recPoints = setupFids[1]; // # of points
+
+      var recImage = Number(setupFids[2]); // 1=enable
+
+      var globalFid = (_recog$2 = recog[1]) === null || _recog$2 === void 0 ? void 0 : _recog$2.split(",");
+      var useGlobal = Number(globalFid === null || globalFid === void 0 ? void 0 : globalFid.slice(0, 1)) ? true : false; // const gFidQty = globalFid[0];
+
+      var gFidQty = Number(recPoints);
+      var gFid1x = globalFid[1];
+      var gFid1y = globalFid[2];
+      var gFid1m = globalFid[3];
+      var gFid2x = globalFid[4];
+      var gFid2y = globalFid[5];
+      var gFid2m = globalFid[6];
+      var gFid3x = globalFid[7];
+      var gFid3y = globalFid[8];
+      var gFid3m = globalFid[9];
       var markCut = (_recCut$2 = recCut[1]) === null || _recCut$2 === void 0 ? void 0 : _recCut$2.split(':SETUP', 2);
       var fidMarks = (_markCut$ = markCut[0]) === null || _markCut$ === void 0 ? void 0 : _markCut$.trim();
-      var fmarkArr = fidMarks === null || fidMarks === void 0 ? void 0 : fidMarks.split(/\n/g); // BarCodes :BC-COMMON -> :BC-MARK -> :NOZ-PLC
+      var fmarkArr = fidMarks === null || fidMarks === void 0 ? void 0 : fidMarks.split(/\n/g);
+      var fmarkMap = asMap(fmarkArr);
+      var fmarkRaw = fmarkMap.map(function (m) {
+        return [m[1], m[2], m[4], m[5], m[6]];
+      }); // BarCodes :BC-COMMON -> :BC-MARK -> :NOZ-PLC
 
-      var f0Cut = (_markCut$2 = markCut[1]) === null || _markCut$2 === void 0 ? void 0 : _markCut$2.split(':FDR-00', 2);
+      var OPEGcut = (_markCut$2 = markCut[1]) === null || _markCut$2 === void 0 ? void 0 : (_markCut$2$split = _markCut$2.split(":OPE-G", 2)) === null || _markCut$2$split === void 0 ? void 0 : (_markCut$2$split$ = _markCut$2$split[1]) === null || _markCut$2$split$ === void 0 ? void 0 : (_markCut$2$split$$spl = _markCut$2$split$.split(":BC-COMMON", 2)) === null || _markCut$2$split$$spl === void 0 ? void 0 : _markCut$2$split$$spl[0];
+      var OPEGmap = asMap(OPEGcut === null || OPEGcut === void 0 ? void 0 : OPEGcut.split(/\n/g));
+      var preplcTp = (_OPEGmap$ = OPEGmap[0]) === null || _OPEGmap$ === void 0 ? void 0 : _OPEGmap$[0];
+      var preplcBm = (_OPEGmap$2 = OPEGmap[0]) === null || _OPEGmap$2 === void 0 ? void 0 : _OPEGmap$2[1];
+      var f0Cut = (_markCut$3 = markCut[1]) === null || _markCut$3 === void 0 ? void 0 : _markCut$3.split(':FDR-00', 2);
       var f1Cut = (_f0Cut$ = f0Cut[1]) === null || _f0Cut$ === void 0 ? void 0 : _f0Cut$.split(':FDR-01', 2);
       var f0Data = (_f1Cut$ = f1Cut[0]) === null || _f1Cut$ === void 0 ? void 0 : _f1Cut$.replace(',', "").trim();
       var f2Cut = (_f1Cut$2 = f1Cut[1]) === null || _f1Cut$2 === void 0 ? void 0 : _f1Cut$2.split(':FDR-02', 2);
@@ -695,38 +763,52 @@ function dataInputExtract(rawText, sendUpName, sendUpBoard, sendUpPlace, sendUpP
       var f4Data = (_f5Cut$ = f5Cut[0]) === null || _f5Cut$ === void 0 ? void 0 : _f5Cut$.replace(',', "").trim();
       var feederSet = f0Data + "\n" + f1Data + "\n" + f2Data + "\n" + f3Data + "\n" + f4Data;
       var feederArr = feederSet === null || feederSet === void 0 ? void 0 : feederSet.split(/\n/g);
-      var feederMap = feederArr === null || feederArr === void 0 ? void 0 : feederArr.map(function (e) {
-        return e.split(",");
-      });
+      var feederMap = asMap(feederArr); // slot, partNum, _, altNum, C, comment, fixed, altEnable 
+
       var uCut1 = (_f5Cut$2 = f5Cut[1]) === null || _f5Cut$2 === void 0 ? void 0 : _f5Cut$2.split(':P-DAT01', 2)[1];
       var oExist = uCut1 === null || uCut1 === void 0 ? void 0 : uCut1.includes(":O-DAT01");
       var uCut2 = oExist ? uCut1 === null || uCut1 === void 0 ? void 0 : uCut1.split(':O-DAT01', 2) : uCut1 === null || uCut1 === void 0 ? void 0 : uCut1.split(':PP1', 1);
       var uData = (_uCut2$ = uCut2[0]) === null || _uCut2$ === void 0 ? void 0 : _uCut2$.replace(',', "").trim();
       var uArr = uData === null || uData === void 0 ? void 0 : uData.split(/\n/g);
-      var imageFid = (_uArr$ = uArr[0]) === null || _uArr$ === void 0 ? void 0 : _uArr$.split(",");
-      var iFid1x = useGlobal ? globalFid[1] : imageFid[7];
-      var iFid1y = useGlobal ? globalFid[2] : imageFid[8];
-      var iFid2x = useGlobal ? globalFid[4] : imageFid[9];
-      var iFid2y = useGlobal ? globalFid[5] : imageFid[10];
-      var findex1 = Number.parseInt(useGlobal ? globalFid[3] : imageFid[11], 10) - 1;
-      var findex2 = Number.parseInt(useGlobal ? globalFid[6] : imageFid[12], 10) - 1;
-      var fMark1 = Number((_fmarkArr$findex = fmarkArr[findex1]) === null || _fmarkArr$findex === void 0 ? void 0 : _fmarkArr$findex.split(",")[1]);
-      var fMark2 = Number((_fmarkArr$findex2 = fmarkArr[findex2]) === null || _fmarkArr$findex2 === void 0 ? void 0 : _fmarkArr$findex2.split(",")[1]);
-      var hasBad = uArr[1].split(",")[6] === "B";
-      var localBad = hasBad ? uArr[1].split(",") : undefined;
+      var uMap = asMap(uArr);
+      var imageFid = uMap[0];
+      var iFidEnbl = imageFid[4];
+      var iFid1x = imageFid[7];
+      var iFid1y = imageFid[8];
+      var iFid1m = imageFid[11];
+      var iFid2x = imageFid[9];
+      var iFid2y = imageFid[10];
+      var iFid2m = imageFid[12];
+      var bFid1x = useGlobal ? gFid1x : iFid1x;
+      var bFid1y = useGlobal ? gFid1y : iFid1y;
+      var bFid2x = useGlobal ? gFid2x : iFid2x;
+      var bFid2y = useGlobal ? gFid2y : iFid2y;
+      var bFid3x = useGlobal ? gFid3x : 0;
+      var bFid3y = useGlobal ? gFid3y : 0;
+      var findex1 = Number.parseInt(useGlobal ? gFid1m : iFid1m, 10) - 1;
+      var findex2 = Number.parseInt(useGlobal ? gFid2m : iFid2m, 10) - 1;
+      var findex3 = Number.parseInt(useGlobal ? gFid3m : 1, 10) - 1;
+      var fMark1 = Number((_fmarkMap$findex = fmarkMap[findex1]) === null || _fmarkMap$findex === void 0 ? void 0 : _fmarkMap$findex[1]);
+      var fMark2 = Number((_fmarkMap$findex2 = fmarkMap[findex2]) === null || _fmarkMap$findex2 === void 0 ? void 0 : _fmarkMap$findex2[1]);
+      var fMark3 = bFid3x || bFid3y ? Number((_fmarkMap$findex3 = fmarkMap[findex3]) === null || _fmarkMap$findex3 === void 0 ? void 0 : _fmarkMap$findex3[1]) : "-";
+      var localBad = uMap[1];
+      var hasBad = (localBad === null || localBad === void 0 ? void 0 : localBad[6]) === "B";
       var lBadX = hasBad ? Number(localBad[0]) : undefined;
       var lBadY = hasBad ? Number(localBad[1]) : undefined;
-      var pDataArray = hasBad ? uArr === null || uArr === void 0 ? void 0 : uArr.slice(2, -1) : uArr === null || uArr === void 0 ? void 0 : uArr.slice(1, -1);
+      var pDataArray = hasBad ? uMap === null || uMap === void 0 ? void 0 : uMap.slice(2, -1) : uMap === null || uMap === void 0 ? void 0 : uMap.slice(1, -1);
       var pDataMap = pDataArray === null || pDataArray === void 0 ? void 0 : pDataArray.map(function (pl) {
-        var spL = pl.split(",");
-        var pnMatch = feederMap.find(function (l) {
-          return l[0] === spL[3];
-        });
-        var pn = pnMatch ? pnMatch[1] : undefined;
-        return [spL[13], Number(spL[0]), Number(spL[1]), Number(spL[2]), pn];
+        var _feederMap$find;
+
+        var symbol = pl[13];
+        var partNum = ((_feederMap$find = feederMap.find(function (l) {
+          return l[0] === pl[3];
+        })) === null || _feederMap$find === void 0 ? void 0 : _feederMap$find[1]) || undefined;
+        return [symbol, Number(pl[0]), Number(pl[1]), Number(pl[2]), partNum, pl[6]];
       });
-      pDataMap === null || pDataMap === void 0 ? void 0 : pDataMap.push(["fid1", Number(iFid1x), Number(iFid1y), 0, "FID"]);
-      pDataMap === null || pDataMap === void 0 ? void 0 : pDataMap.push(["fid2", Number(iFid2x), Number(iFid2y), 0, "FID"]);
+      var pDataPnP = pDataMap.slice();
+      pDataPnP === null || pDataPnP === void 0 ? void 0 : pDataPnP.push(["Fid1", Number(bFid1x), Number(bFid1y), 0, "FID", "-"]);
+      pDataPnP === null || pDataPnP === void 0 ? void 0 : pDataPnP.push(["Fid2", Number(bFid2x), Number(bFid2y), 0, "FID", "-"]);
+      Number(bFid3x) || Number(bFid3y) ? pDataPnP === null || pDataPnP === void 0 ? void 0 : pDataPnP.push(["Fid3", Number(bFid3x), Number(bFid3y), 0, "FID", "-"]) : null;
       var inUseParts = feederMap === null || feederMap === void 0 ? void 0 : feederMap.map(function (e) {
         var plMatch = pDataMap.find(function (p) {
           return p[4] === e[1];
@@ -738,45 +820,742 @@ function dataInputExtract(rawText, sendUpName, sendUpBoard, sendUpPlace, sendUpP
       }).filter(function (f) {
         return f;
       }).sort();
-      var oData = oExist ? (_uCut2$2 = uCut2[1]) === null || _uCut2$2 === void 0 ? void 0 : (_uCut2$2$split$ = _uCut2$2.split(':PP1', 1)[0]) === null || _uCut2$2$split$ === void 0 ? void 0 : _uCut2$2$split$.replace(',', "").trim() : undefined;
+      var oData = oExist ? (_uCut2$2 = uCut2[1]) === null || _uCut2$2 === void 0 ? void 0 : (_uCut2$2$split$ = _uCut2$2.split(':PP1', 1)[0]) === null || _uCut2$2$split$ === void 0 ? void 0 : _uCut2$2$split$.replace(',', "").trim() : "";
       var oDataArray = oData === null || oData === void 0 ? void 0 : (_oData$split = oData.split(/\n/g)) === null || _oData$split === void 0 ? void 0 : _oData$split.slice(1, -1);
-      var oDataMap = oDataArray === null || oDataArray === void 0 ? void 0 : oDataArray.map(function (ol) {
+      var oDataPlain = oDataArray === null || oDataArray === void 0 ? void 0 : oDataArray.map(function (ol) {
         var soL = ol.split(",");
-        return [Number(soL[0]), Number(soL[1]), Number(soL[2])];
+        return [Number(soL[0]), Number(soL[1]), Number(soL[2]), soL[5]];
       });
-      sendUpName(fileName);
-      sendUpBoard({
-        topTitle: topTitle,
-        subTitle: subTitle,
-        bX: bX,
-        bY: bY,
-        bT: bT,
-        orginX: orginX,
-        orginY: orginY,
-        fMark1: fMark1,
-        fMark2: fMark2,
-        oDataMap: oDataMap,
-        gBadX: gBadX,
-        gBadY: gBadY,
-        lBadX: lBadX,
-        lBadY: lBadY
+      sendUp({
+        file: fileName,
+        board: {
+          topTitle: topTitle,
+          subTitle: subTitle,
+          bX: bX,
+          bY: bY,
+          bT: bT,
+          orginX: orginX,
+          orginY: orginY,
+          fMark1: fMark1,
+          fMark2: fMark2,
+          fMark3: fMark3,
+          oDataPlain: oDataPlain,
+          gBadX: gBadX,
+          gBadY: gBadY,
+          lBadX: lBadX,
+          lBadY: lBadY
+        },
+        place: pDataPnP,
+        parts: inUseParts,
+        yamaha: {
+          topTitle: topTitle,
+          subTitle: subTitle,
+          bX: bX,
+          bY: bY,
+          bT: bT,
+          orginX: orginX,
+          orginY: orginY,
+          zDeg: zDeg,
+          pcbHt: pcbHt,
+          preplcTp: preplcTp,
+          preplcBm: preplcBm,
+          gBadX: gBadX,
+          gBadY: gBadY,
+          gBadModeLocal: gBadModeLocal,
+          gBadImgLocal: gBadImgLocal,
+          gBadModeOvrll: gBadModeOvrll,
+          gBadSqnc: gBadSqnc,
+          gBadImgOvrll: gBadImgOvrll,
+          recEnable: recEnable,
+          recPoints: recPoints,
+          recImage: recImage,
+          gFid1x: gFid1x,
+          gFid1y: gFid1y,
+          gFid1m: gFid1m,
+          gFid2x: gFid2x,
+          gFid2y: gFid2y,
+          gFid2m: gFid2m,
+          gFid3x: gFid3x,
+          gFid3y: gFid3y,
+          gFid3m: gFid3m,
+          fmarkRaw: fmarkRaw,
+          // [D1] [D2] [window] [image 0=bright] [level 0=high]
+          inUseParts: inUseParts,
+          iFidEnbl: iFidEnbl,
+          iFid1x: iFid1x,
+          iFid1y: iFid1y,
+          iFid1m: iFid1m,
+          iFid2x: iFid2x,
+          iFid2y: iFid2y,
+          iFid2m: iFid2m,
+          lBadX: lBadX,
+          lBadY: lBadY,
+          pDataMap: pDataMap,
+          // [0=symbol] [1=x] [2=y] [3=theta] [4=partnum] [5=control]
+          oDataPlain: oDataPlain // [0=x] [1=y] [2=theta] [3=control]
+          // multiple units?
+
+        },
+        advantis: {
+          topTitle: topTitle,
+          subTitle: subTitle,
+          bX: bX,
+          bY: bY,
+          bT: bT,
+          orginX: orginX,
+          orginY: orginY,
+          recImage: recImage,
+          iFid1x: iFid1x,
+          iFid1y: iFid1y,
+          iFid2x: iFid2x,
+          iFid2y: iFid2y,
+          gFidQty: gFidQty,
+          gFid1x: gFid1x,
+          gFid1y: gFid1y,
+          gFid2x: gFid2x,
+          gFid2y: gFid2y,
+          gFid3x: gFid3x,
+          gFid3y: gFid3y,
+          oDataPlain: oDataPlain
+        },
+        error: null
       });
-      sendUpPlace(pDataMap);
-      sendUpParts(inUseParts);
-      sendUpError(null);
     } else {
-      sendUpError("Invalid");
+      sendUp({
+        error: "Invalid"
+      });
     }
   } catch (error) {
-    sendUpError(error.message);
+    sendUp({
+      error: error.message
+    });
   }
 }
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/components/theButtons.jsx
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/dataInputExtractYamaha.js
+function dataInputExtractYamaha_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = dataInputExtractYamaha_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function dataInputExtractYamaha_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return dataInputExtractYamaha_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return dataInputExtractYamaha_arrayLikeToArray(o, minLen); }
+
+function dataInputExtractYamaha_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// import lodash from 'lodash';
+var cleanMap = function cleanMap(arr) {
+  var multidmn = [];
+
+  if (arr) {
+    var _iterator = dataInputExtractYamaha_createForOfIteratorHelper(arr),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var line = _step.value;
+
+        if (line && line != '\r') {
+          // maps start with ['\r'] and end with ['']
+          multidmn.push(line.replace("\r", "").split(","));
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }
+
+  return multidmn;
+};
+
+function dataInputExtract(rawText, sendUp) {
+  try {
+    if (rawText && typeof rawText.split(/\n/g)[2] == 'string') {
+      var _rawText$split, _rawText$split$, _commonCut$, _commonCut$$trim, _commonData$, _commonData$2, _commonCut$2, _boardCut$, _boardCut$$trim, _boardData$, _boardData$2, _boardCut$2, _bbrCut$, _bbrCut$$trim, _gBadMark$, _bbrCut$2, _recCut$, _recCut$$trim, _recog$, _recog$2, _recCut$2, _markCut$, _markCut$2, _markCut$2$split$, _cmpntCut$, _cmpntCut$2, _feederCut$, _feederCut$2, _placeCutZ$, _placeCutZ$2, _fmarkMap$findex, _fmarkMap$findex2, _fmarkMap$findex3;
+
+      var fileName = (_rawText$split = rawText.split(',', 1)) === null || _rawText$split === void 0 ? void 0 : _rawText$split[0];
+      var commonCut = (_rawText$split$ = rawText.split(':L-COMMON', 2)[1]) === null || _rawText$split$ === void 0 ? void 0 : _rawText$split$.split(':L-BOARD');
+      var commonData = (_commonCut$ = commonCut[0]) === null || _commonCut$ === void 0 ? void 0 : (_commonCut$$trim = _commonCut$.trim()) === null || _commonCut$$trim === void 0 ? void 0 : _commonCut$$trim.split(/\n/g);
+      var topTitle = (_commonData$ = commonData[0]) === null || _commonData$ === void 0 ? void 0 : _commonData$.split(",")[0];
+      var subTitle = (_commonData$2 = commonData[0]) === null || _commonData$2 === void 0 ? void 0 : _commonData$2.split(",")[1];
+      var boardCut = (_commonCut$2 = commonCut[1]) === null || _commonCut$2 === void 0 ? void 0 : _commonCut$2.split(':L-BBR', 2);
+      var boardData = (_boardCut$ = boardCut[0]) === null || _boardCut$ === void 0 ? void 0 : (_boardCut$$trim = _boardCut$.trim()) === null || _boardCut$$trim === void 0 ? void 0 : _boardCut$$trim.split(/\n/g);
+      var boardSize = (_boardData$ = boardData[0]) === null || _boardData$ === void 0 ? void 0 : _boardData$.split(",");
+      var bX = Number(boardSize[0]);
+      var bY = Number(boardSize[1]);
+      var bT = Number(boardSize[2]);
+      var boardOrgin = (_boardData$2 = boardData[1]) === null || _boardData$2 === void 0 ? void 0 : _boardData$2.split(",");
+      var orginX = Number(boardOrgin[0]);
+      var orginY = Number(boardOrgin[1]); // console.log({boardData, bX, bY, bT, orginX, orginY}); //GOOD
+
+      var bbrCut = (_boardCut$2 = boardCut[1]) === null || _boardCut$2 === void 0 ? void 0 : _boardCut$2.split(':L-RECOG', 2);
+      var gBadMark = (_bbrCut$ = bbrCut[0]) === null || _bbrCut$ === void 0 ? void 0 : (_bbrCut$$trim = _bbrCut$.trim()) === null || _bbrCut$$trim === void 0 ? void 0 : _bbrCut$$trim.split(/\n/g); // const bbr1 = gBadMark[0]?.split(",");
+      // bbr1[0] = mode (0,1-standard,2-optional)
+      // bbr1[1] = sensor (0-photo_sensor, 1-camera)
+      // bbr1[2] = color
+      // bbr1[3] = size
+      // ...camera settings
+      // bbr1[-4] = image color (0-black, 1-white)
+      // bbr1[last] = sequence (0-bad_mark[default], 1-recognition, 2-global_recognition)
+
+      var bbr2 = (_gBadMark$ = gBadMark[1]) === null || _gBadMark$ === void 0 ? void 0 : _gBadMark$.split(","); // bbr2[0] = mode
+
+      var gBadX = Number(bbr2[1]);
+      var gBadY = Number(bbr2[2]); // const gBadColor = Number(bbr2[3]);
+      // const gBadSize = Number(bbr2[4]);
+      // console.log({bbrCut, gBadMark, bbrline2, gBadX, gBadY}); // GOOD
+      /////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+      var recCut = (_bbrCut$2 = bbrCut[1]) === null || _bbrCut$2 === void 0 ? void 0 : _bbrCut$2.split(':L-MARK', 2); // console.log({recCut}); // GOOD
+
+      var recog = (_recCut$ = recCut[0]) === null || _recCut$ === void 0 ? void 0 : (_recCut$$trim = _recCut$.trim()) === null || _recCut$$trim === void 0 ? void 0 : _recCut$$trim.split(/\n/g);
+      var setupFids = (_recog$ = recog[0]) === null || _recog$ === void 0 ? void 0 : _recog$.split(","); // const recEnable = setupFids[0];
+
+      var recImage = Number(setupFids[1]); // const recLocal = setupFids[2];
+
+      var globalFid = (_recog$2 = recog[1]) === null || _recog$2 === void 0 ? void 0 : _recog$2.split(",");
+      var useGlobal = Number(globalFid === null || globalFid === void 0 ? void 0 : globalFid.slice(0, 1)) ? true : false;
+      var gFidQty = Number(globalFid[0]);
+      var gFid1x = globalFid[1];
+      var gFid1y = globalFid[2];
+      var gFid1m = globalFid[3];
+      var gFid2x = globalFid[4];
+      var gFid2y = globalFid[5];
+      var gFid2m = globalFid[6];
+      var gFid3x = globalFid[7];
+      var gFid3y = globalFid[8];
+      var gFid3m = globalFid[9];
+      var markCut = (_recCut$2 = recCut[1]) === null || _recCut$2 === void 0 ? void 0 : _recCut$2.split(':L-SETUP', 2);
+      var fidMarks = (_markCut$ = markCut[0]) === null || _markCut$ === void 0 ? void 0 : _markCut$.trim();
+      var fmarkArr = fidMarks === null || fidMarks === void 0 ? void 0 : fidMarks.split(/\n/g);
+      var fmarkMap = cleanMap(fmarkArr); // console.log({globalFid, useGlobal, markCut, fidMarks, fmarkMap}); // GOOD
+      // BarCodes :BC-COMMON -> :L-BC-PRM -> :L-BC-MARK -> :L-SWITCH
+
+      var cmpntCut = (_markCut$2 = markCut[1]) === null || _markCut$2 === void 0 ? void 0 : (_markCut$2$split$ = _markCut$2.split(':L-CMPNT', 2)[1]) === null || _markCut$2$split$ === void 0 ? void 0 : _markCut$2$split$.split(':FEEDER', 2);
+      var cmpntData = (_cmpntCut$ = cmpntCut[0]) === null || _cmpntCut$ === void 0 ? void 0 : _cmpntCut$.split(/\n/g);
+      var cmpntMap = cleanMap(cmpntData); // console.log({cmpntMap}); // GOOD
+
+      var feederCut = (_cmpntCut$2 = cmpntCut[1]) === null || _cmpntCut$2 === void 0 ? void 0 : _cmpntCut$2.split(':TRAY', 2);
+      var feederData = (_feederCut$ = feederCut[0]) === null || _feederCut$ === void 0 ? void 0 : _feederCut$.split(/\n/g);
+      var feederMap = cleanMap(feederData); // console.log({feederMap}); // GOOD
+      // bank = [1]
+      // slot = [3]
+      // comp = [4]
+      // skip = [7] (-,S,E)
+
+      var placeCutA = (_feederCut$2 = feederCut[1]) === null || _feederCut$2 === void 0 ? void 0 : _feederCut$2.split(':P-DAT01', 2)[1];
+      var hasOffset = placeCutA === null || placeCutA === void 0 ? void 0 : placeCutA.includes(":O-DAT01");
+      var endplace = hasOffset ? ":O-DAT01" : ":SEQUENCE01";
+      var placeCutZ = placeCutA === null || placeCutA === void 0 ? void 0 : placeCutA.split(endplace, 2);
+      var placeData = (_placeCutZ$ = placeCutZ[0]) === null || _placeCutZ$ === void 0 ? void 0 : _placeCutZ$.split(/\n/g);
+      var placeMap = cleanMap(placeData); // console.log({placeMap}); // GOOD
+
+      var offsetCut = hasOffset ? (_placeCutZ$2 = placeCutZ[1]) === null || _placeCutZ$2 === void 0 ? void 0 : _placeCutZ$2.split(':SEQUENCE01', 2)[0] : "";
+      var offsetData = offsetCut.split(/\n/g);
+      var offsetMap = cleanMap(offsetData); // console.log({offsetMap}); // GOOD
+
+      var imageFid = placeMap[0];
+      var iFid1x = imageFid[6];
+      var iFid1y = imageFid[7];
+      var iFid1m = imageFid[10];
+      var iFid2x = imageFid[8];
+      var iFid2y = imageFid[9];
+      var iFid2m = imageFid[11];
+      var bFid1x = useGlobal ? gFid1x : iFid1x;
+      var bFid1y = useGlobal ? gFid1y : iFid1y;
+      var bFid2x = useGlobal ? gFid2x : iFid2x;
+      var bFid2y = useGlobal ? gFid2y : iFid2y;
+      var bFid3x = useGlobal ? gFid3x : 0;
+      var bFid3y = useGlobal ? gFid3y : 0;
+      var findex1 = Number.parseInt(useGlobal ? gFid1m : iFid1m, 10) - 1;
+      var findex2 = Number.parseInt(useGlobal ? gFid2m : iFid2m, 10) - 1;
+      var findex3 = Number.parseInt(useGlobal ? gFid3m : 1, 10) - 1;
+      var fMark1 = Number((_fmarkMap$findex = fmarkMap[findex1]) === null || _fmarkMap$findex === void 0 ? void 0 : _fmarkMap$findex[1]);
+      var fMark2 = Number((_fmarkMap$findex2 = fmarkMap[findex2]) === null || _fmarkMap$findex2 === void 0 ? void 0 : _fmarkMap$findex2[1]);
+      var fMark3 = bFid3x || bFid3y ? Number((_fmarkMap$findex3 = fmarkMap[findex3]) === null || _fmarkMap$findex3 === void 0 ? void 0 : _fmarkMap$findex3[1]) : "-"; // console.log({imageFid, bFid1x, bFid1y, fMark1, bFid2x, bFid2y, fMark2, bFid3x, bFid3y, fMark3}); // GOOD
+
+      var localBad = placeMap[1];
+      var hasBad = (localBad === null || localBad === void 0 ? void 0 : localBad[5]) === "B";
+      var lBadX = hasBad ? Number(localBad[0]) : undefined;
+      var lBadY = hasBad ? Number(localBad[1]) : undefined;
+      var PDAT01Array = hasBad ? placeMap === null || placeMap === void 0 ? void 0 : placeMap.slice(2, -1) : placeMap === null || placeMap === void 0 ? void 0 : placeMap.slice(1, -1); // console.log({hasBad, PDAT01Array});
+
+      var pnpDataMap = PDAT01Array === null || PDAT01Array === void 0 ? void 0 : PDAT01Array.map(function (pl) {
+        var _cmpntMap$find;
+
+        var x = pl[0];
+        var y = pl[1];
+        var theta = pl[2]; // height = [3]
+
+        var comp = pl[4];
+        var control = pl[5]; // (-,S,E,P)
+
+        var symbol = pl[20];
+        var partNum = ((_cmpntMap$find = cmpntMap.find(function (l) {
+          return l[0] === comp;
+        })) === null || _cmpntMap$find === void 0 ? void 0 : _cmpntMap$find[1]) || undefined;
+        return [symbol, Number(x), Number(y), Number(theta), partNum, control];
+      });
+      pnpDataMap === null || pnpDataMap === void 0 ? void 0 : pnpDataMap.push(["fid1", Number(bFid1x), Number(bFid1y), 0, "FID", "-"]);
+      pnpDataMap === null || pnpDataMap === void 0 ? void 0 : pnpDataMap.push(["fid2", Number(bFid2x), Number(bFid2y), 0, "FID", "-"]);
+      Number(bFid3x) || Number(bFid3y) ? pnpDataMap === null || pnpDataMap === void 0 ? void 0 : pnpDataMap.push(["fid3", Number(bFid3x), Number(bFid3y), 0, "FID", "-"]) : null; // console.log({pnpDataMap}); // GOOD
+
+      var loadDataMap = cmpntMap === null || cmpntMap === void 0 ? void 0 : cmpntMap.map(function (cmp) {
+        var partNum = cmp[1];
+        var fdr = feederMap.find(function (f) {
+          return f[4] === cmp[0];
+        });
+        var slot = !fdr ? "000" : fdr[1] + fdr[3].slice(1);
+        var skip = !fdr ? "S" : fdr[7]; // (-,S,E)
+
+        var plc = PDAT01Array.filter(function (l) {
+          return l[4] === cmp[0];
+        });
+        var refs = plc.map(function (p) {
+          return p[20];
+        }).join(', ');
+        return [slot, partNum, skip, plc.length, refs];
+      }).sort(function (a, b) {
+        return a > b ? 1 : a < b ? -1 : 0;
+      }); // console.log({loadDataMap}); // GOOD
+
+      var inUseParts = loadDataMap === null || loadDataMap === void 0 ? void 0 : loadDataMap.map(function (e) {
+        if (e[3] > 0) {
+          return e[1];
+        }
+      }).filter(function (f) {
+        return f;
+      }).sort(); // console.log({inUseParts}); // GOOD
+
+      var oDataClean = offsetMap === null || offsetMap === void 0 ? void 0 : offsetMap.slice(0, -1);
+      var oDataPlain = oDataClean === null || oDataClean === void 0 ? void 0 : oDataClean.map(function (ol) {
+        // line = [0]
+        var x = ol[1];
+        var y = ol[2];
+        var theta = ol[3]; // height? = [4]
+
+        var skip = ol[5];
+        return [Number(x), Number(y), Number(theta), skip];
+      }); // console.log({oDataPlain}); // GOOD
+
+      sendUp({
+        file: fileName,
+        board: {
+          topTitle: topTitle,
+          subTitle: subTitle,
+          bX: bX,
+          bY: bY,
+          bT: bT,
+          orginX: orginX,
+          orginY: orginY,
+          fMark1: fMark1,
+          fMark2: fMark2,
+          fMark3: fMark3,
+          oDataPlain: oDataPlain,
+          gBadX: gBadX,
+          gBadY: gBadY,
+          lBadX: lBadX,
+          lBadY: lBadY
+        },
+        place: pnpDataMap,
+        load: loadDataMap,
+        parts: inUseParts,
+        advantis: {
+          topTitle: topTitle,
+          subTitle: subTitle,
+          bX: bX,
+          bY: bY,
+          bT: bT,
+          orginX: orginX,
+          orginY: orginY,
+          recImage: recImage,
+          iFid1x: iFid1x,
+          iFid1y: iFid1y,
+          iFid2x: iFid2x,
+          iFid2y: iFid2y,
+          gFidQty: gFidQty,
+          gFid1x: gFid1x,
+          gFid1y: gFid1y,
+          gFid2x: gFid2x,
+          gFid2y: gFid2y,
+          gFid3x: gFid3x,
+          gFid3y: gFid3y,
+          oDataPlain: oDataPlain
+        },
+        error: null
+      });
+    } else {
+      sendUp({
+        error: "Invalid"
+      });
+    }
+  } catch (error) {
+    sendUp({
+      error: error.message
+    });
+  }
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportPnP.js
+function downPnP(filenameState, placeState) {
+  var pnpConstruct = placeState === null || placeState === void 0 ? void 0 : placeState.join("\n");
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, "_pick-place.csv"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(pnpConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } else {
+    alert('document not found');
+  }
+}
+function printPnP(filenameState, placeState, printTextThing) {
+  var tbSy = "width:75%; border-collapse:collapse";
+  var clSy = "border: 1px solid black; text-align: right;";
+  var pnpHTML = "<div>\n      <h2>".concat(filenameState, "</h2>\n      <table style=\"").concat(tbSy, "\">\n        ").concat(placeState === null || placeState === void 0 ? void 0 : placeState.map(function (line, index) {
+    return "<tr>\n          <td>".concat(index + 1, "</td>\n            ").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
+      return "<td style=\"".concat(clSy, "\"><big>").concat(cell, "</big></td>");
+    }).join(''), "</tr>");
+  }).join(''), "\n      </table>\n    </div>");
+  printTextThing(pnpHTML);
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportBoard.js
+function downBoard(filenameState, boardState) {
+  var bd = boardState;
+  var boardConstruct = "".concat(filenameState, "\n\n").concat(bd === null || bd === void 0 ? void 0 : bd.topTitle, "\n\n").concat(bd === null || bd === void 0 ? void 0 : bd.subTitle, "\n\nBoard\nX\t").concat(bd === null || bd === void 0 ? void 0 : bd.bX, "\nY\t").concat(bd === null || bd === void 0 ? void 0 : bd.bY, "\nT\t").concat(bd === null || bd === void 0 ? void 0 : bd.bT, "\n\nOrgin Offsets\nX\t").concat(bd === null || bd === void 0 ? void 0 : bd.orginX, "\nY\t").concat(bd === null || bd === void 0 ? void 0 : bd.orginY, "\n\nFiducial Mark Size\nFid1\t").concat(bd === null || bd === void 0 ? void 0 : bd.fMark1, "\nFid2\t").concat(bd === null || bd === void 0 ? void 0 : bd.fMark2, "\n\nPanel Offsets\n").concat(bd.oDataPlain ? bd.oDataPlain.map(function (line, index) {
+    return "".concat(index + 1, "\t").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
+      return "".concat(cell, "\t");
+    }).join(''), "\n");
+  }).join('') : "undefined\n", "\nBad Mark\n").concat(bd !== null && bd !== void 0 && bd.lBadX ? "Global\t".concat(bd === null || bd === void 0 ? void 0 : bd.gBadX, "\t").concat(bd === null || bd === void 0 ? void 0 : bd.gBadY, "\nLocal\t").concat(bd === null || bd === void 0 ? void 0 : bd.lBadX, "\t").concat(bd === null || bd === void 0 ? void 0 : bd.lBadY, "\n") : "undefined\n");
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, "_board.txt"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(boardConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } else {
+    alert('document not found');
+  }
+}
+function printBoard(filenameState, boardState, printTextThing) {
+  var tbSy = "width:50%; border-collapse:collapse";
+  var hclSy = "border: 1px solid black; text-align: left;";
+  var clSy = "border: 1px solid black; text-align: right;";
+  var bd = boardState;
+  var brdHTML = "<div>\n      <h2>".concat(filenameState, "</h2>\n      <h3>").concat(bd === null || bd === void 0 ? void 0 : bd.topTitle, "</h3>\n      <h3>").concat(bd === null || bd === void 0 ? void 0 : bd.subTitle, "</h3>\n      <table style=\"").concat(tbSy, "\">\n        <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Board</th><tr>\n        <tr><td style=\"").concat(clSy, "\">X</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bX, "</big></td></tr>\n        <tr><td style=\"").concat(clSy, "\">Y</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bY, "</big></td></tr>\n        <tr><td style=\"").concat(clSy, "\">T</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bT, "</big></td></tr>\n        <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Orgin Offsets</th><tr>\n        <tr><td style=\"").concat(clSy, "\">X</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.orginX, "</big></td></tr>\n        <tr><td style=\"").concat(clSy, "\">Y</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.orginY, "</big></td></tr>\n        <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Fiducial Mark Size</th><tr>\n        <tr><td style=\"").concat(clSy, "\">Fid1</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.fMark1, "</big></td></tr>\n        <tr><td style=\"").concat(clSy, "\">Fid2</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.fMark2, "</big></td></tr>\n        <tr><td style=\"").concat(clSy, "\">Fid3</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.fMark3, "</big></td></tr>\n      </table>\n      <br />\n      <table style=\"").concat(tbSy, "\">\n        <tr><th colspan=\"5\" style=\"").concat(hclSy, "\">Panel Offsets</th><tr>\n        ").concat(bd.oDataPlain ? bd.oDataPlain.map(function (line, index) {
+    return "<tr>\n          <td>".concat(index + 1, "</td>\n            ").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
+      return "<td style=\"".concat(clSy, "\"><big>").concat(cell, "</big></td>");
+    }).join(''), "</tr>");
+  }).join('') : "<tr><td colspan='5'>no offsets</td></tr>", "\n      </table>\n      <br />\n      <table style=\"").concat(tbSy, "\">\n        <tr><th colspan=\"3\" style=\"").concat(hclSy, "\">Bad Mark</th></tr>\n        ").concat(bd !== null && bd !== void 0 && bd.lBadX ? "<tr>\n          <td style=\"".concat(clSy, "\">Global</td>\n          <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.gBadX, "</big></td>\n          <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.gBadY, "</big></td>\n        </tr>\n        <tr>\n          <td style=\"").concat(clSy, "\">Local</td>\n          <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.lBadX, "</big></td>\n          <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.lBadY, "</big></td>\n        </tr>") : "<tr><td colspan='3'>no bad mark</td></tr>", "\n      </table>\n    </div>");
+  printTextThing(brdHTML);
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportLoad.js
+function downLoad(filenameState, loadState) {
+  var loadConstruct = loadState === null || loadState === void 0 ? void 0 : loadState.join("\n");
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, "_load-sheet.txt"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(loadConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } else {
+    alert('document not found');
+  }
+}
+function printLoad(filenameState, loadState, printTextThing) {
+  var tbSy = "width:100%; border-collapse:collapse";
+  var clSy = "border:0; padding: 0.25ch 1ch; text-align: left;";
+  var loadHTML = "<div>\n      <table style=\"".concat(tbSy, "\">\n        <thead>\n          <tr><th colspan=\"5\" style=\"").concat(clSy, "\">").concat(filenameState, "</th></tr>\n          <tr style=\"font-size:14px\">\n            <th style=\"").concat(clSy, "\">Fdr</th>\n            <th style=\"").concat(clSy, "\">Part</th>\n            <th style=\"").concat(clSy, "\">C</th>\n            <th style=\"").concat(clSy, "\">Qty</th>\n            <th style=\"").concat(clSy, "\">Symbols</th>\n          </tr>\n        </thead>\n        <tbody style=\"vertical-align: baseline;line-height: 1.3;\">\n        ").concat(loadState === null || loadState === void 0 ? void 0 : loadState.map(function (line, index) {
+    return "<tr style=\"font-size:14px\">\n            ".concat(line === null || line === void 0 ? void 0 : line.map(function (cell, ix) {
+      return "<td style=\"".concat(clSy).concat(ix != 4 ? 'white-space: nowrap' : '', "\">").concat(cell, "</td>");
+    }).join(''), "</tr>");
+  }).join(''), "\n        </tbody>\n      </table>\n    </div>"); // console.log(loadHTML);
+
+  printTextThing(loadHTML);
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportParts.js
+function downParts(filenameState, partsState) {
+  var partsConstruct = partsState.join("\n");
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, "_parts-list.txt"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(partsConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } else {
+    alert('document not found');
+  }
+}
+function printParts(filenameState, partsState, printTextThing) {
+  var tbSy = "width:100%; border-collapse:collapse";
+  var clSy = "border:0; padding: 0.5ch 0; text-align: left;";
+  var partsHTML = "<div>\n      <table style=\"".concat(tbSy, "\">\n        <thead>\n          <tr><th colspan=\"6\" style=\"").concat(clSy, "\"><big>").concat(filenameState, "</big></th></tr>\n        </thead>\n        <tbody style=\"vertical-align: baseline;line-height: 1.3;\">\n        <tr><td style=\"display: grid; grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );\">\n        ").concat((partsState || []).map(function (line) {
+    return "<p>".concat(line, "</p>");
+  }).join(''), "\n        </td></tr>\n        </tbody>\n      </table>\n    </div>"); // console.log(partsHTML);
+
+  printTextThing(partsHTML);
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportSigma.js
+function downSigma(filenameState, yamBulkState) {
+  var h = yamBulkState;
+
+  if (!h) {
+    return null;
+  }
+  /*
+    topTitle, subTitle, 
+    
+    bX, bY, bT, orginX, orginY, zDeg, pcbHt, preplcTp, preplcBm,
+    
+    gBadX, gBadY,
+    gBadModeLocal, // bad mark mode
+    gBadImgLocal, // image/color 0=black 1=white
+    gBadModeOvrll, // overall pcb bbr mode
+    gBadSqnc, // sequence 0=badmark 1= recog 2=global
+    gBadImgOvrll, // overall image/color 0=black 1=white
+    
+    recEnable, recPoints, recImage,
+    gFid1x, gFid1y, gFid1m, gFid2x, gFid2y, gFid2m, gFid3x, gFid3y, gFid3m,
+    
+    fmarkRaw, // [D1] [D2] [window] [image 0=bright] [level 0=high]
+    
+    inUseParts, 
+    
+    iFidEnbl, iFid1x, iFid1y, iFid1m, iFid2x, iFid2y, iFid2m,
+    
+    lBadX, lBadY,
+    
+    pDataMap, // [0=symbol] [1=x] [2=y] [3=theta] [4=partnum] [5=control]
+    
+    oDataPlain // [0=x] [1=y] [2=theta] [3=control]
+  */
+
+
+  var pad = function pad(val, s, e, y) {
+    var ap = Number(val) < 0 ? "-" : "+";
+
+    if (y) {
+      return ap + Number.parseFloat(Math.abs(val)).toFixed(e).toString().padStart(s, "0");
+    } else {
+      return Number.parseFloat(val).toFixed(e || 0).toString().padStart(s, "0");
+    }
+  };
+
+  var isodate = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+  var first_line = "".concat(filenameState, ",").concat(isodate, " 160840,0037,0001,SMT,NR,0000,00001,0000,0,0,0000,00000000,00000000\n");
+  var filePath = "H:" + "\\" + "ntdata" + "\\" + "library" + "\\" + "Yahama";
+  var line_opsw = ":LINE-OPSW\n0201000000000000000000000000000000000000000000000000000000000000\n";
+  var machine = ":MACHINE\n01,1,NR,-\n01,2,NR,-\n";
+  var machine_op_1 = ":MACHINE-OP\n01,1,0561113100100000000010010000000000000000000000000000000000000000000000000000000000000000000000000000000004400000000100000000011000000101000000000000000001000000000000000000010000000000000000000000000000000000000000000000010000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001100110000006600000000000000000000100000000000001111000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0011100040110000000000000000000000000000000000000000000000000000000300000000300000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n";
+  var machine_op_2 = "01,2,1000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n";
+  var l_common = ":L-COMMON\n".concat(h.topTitle, ",").concat(h.subTitle, ",\n,,\nSMTx Conversion,\n0\n0,\n");
+  var l_board = ":L-BOARD\n".concat(pad(h.bX, 8, 3), ",").concat(pad(h.bY, 7, 3), ",").concat(pad(h.bT, 6, 3), ",1,00.000\n").concat(pad(h.orginX, 8, 3, 1), ",").concat(pad(h.orginY, 7, 3, 1), ",").concat(pad(h.zDeg, 6, 2, 1), ",+000.00,0,0,0\n").concat(pad(h.pcbHt, 5, 3, 1), ",00.000,00.000\n");
+  var l_bbr = ":L-BBR\n".concat(h.gBadModeLocal, ",1,125,1.0,1,1,0,1,0,1,2\n").concat(h.gBadModeOvrll, ",").concat(pad(h.gBadX, 8, 3, 1), ",").concat(pad(h.gBadY, 7, 3, 1), ",125,1.0,1,1,0,0\n");
+  var l_recog = ":L-RECOG\n".concat(h.recEnable, ",").concat(h.recImage, ",0,0,000,0\n").concat(h.recPoints, ",").concat(pad(h.gFid1x, 8, 3, 1), ",").concat(pad(h.gFid1y, 7, 3, 1), ",").concat(h.gFid1m, ",").concat(pad(h.gFid2x, 8, 3, 1), ",").concat(pad(h.gFid2y, 7, 3, 1), ",").concat(h.gFid2m, ",").concat(pad(h.gFid3x, 8, 3, 1), ",").concat(pad(h.gFid3y, 7, 3, 1), ",").concat(h.gFid3m, "\n0,+0000.000,+000.000,01,+0000.000,+000.000,01,+0000.000,+000.000,01\n0,+0000.000,+000.000,01,+0000.000,+000.000,01,+0000.000,+000.000,01\n0,+0000.000,+000.000,01,+0000.000,+000.000,01,+0000.000,+000.000,01\n0,+0000.000,+000.000,01,+0000.000,+000.000,01,+0000.000,+000.000,01\n");
+  var l_mark = ":L-MARK\n".concat(h.fmarkRaw.map(function (m, i) {
+    return "".concat(pad(i, 2), ",").concat(m[0], ",").concat(m[1], ",0.00,").concat(m[2], ",").concat(m[3], ",").concat(m[4], ",270.00,01,01,00,0\n");
+  }).join(''));
+  var l_setup_blank = ":L-SETUP\n2,-267.500,0,0,0,0,0\n";
+  var l_ope_blank = ":L-OPE\n0\n0,00,00,+00.000,+00.000,0000,0000,0240,0000,0000,0200\n0,00,00,+00.000,+00.000,0000,0000,0240,0000,0000,0200\n0.000,1,000.000,0,0\n";
+  var l_pcb_h_blank = ":L-PCB-H\n0,-1.000,+1.000\n0,-1.000,+1.000\n";
+  var l_back_pin_blank = ":L-BACK-PIN\n,\n0,20\n";
+  var l_bc_blank = ":L-BC-COMMON\n001,255,001,255,001,255,001,255,0\n+0000.000,+000.000,00,+0000.000,+000.000,00,+0000.000,+000.000,00,+0000.000,+000.000,00\n+0000.000,+000.000,00,+0000.000,+000.000,00,+0000.000,+000.000,00,+0000.000,+000.000,00\n0,0,1\n:L-BC-PRM\n1,01\n:L-BC-MARK\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n0,13000,03000,03000,01,01,0,1,1,1,1\n";
+  var m_ope = ":M-OPE\n01,0,3,0,".concat(pad(h.preplcTp, 5, 3), ",").concat(pad(h.preplcBm, 5, 3), ",0,0,0.200,2,-267.500,0,1,156,150,315,0,0,0\n");
+  var m_speed_blank = ":M-SPEED1\n01,0,0800,0080,0.250,0350,+10.000,0350,+05.000,00,+10.000,+10.000\n:M-SPEED2\n01,0,0800,0080,0.250\n:M-SPEED3\n01,0,0800,0080,0.250,0350,+05.000,0350,+10.000,00,+10.000,+10.000\n";
+  var m_locate_blank = ":M-LOCATE1\n01,0,0\n:M-LOCATE2\n01,0,00,00,+00.000,+00.000,0000,0000,0240,0000,0000,0200,0,00,00,+0.000,+0.000,0000,0000,0,0,00,00,00,00,0000,0240,0,+0.000\n:M-LOCATE3\n01,0,00,00,+00.000,+00.000,0000,0000,0240,0000,0000,0200,0,00,00,+0.000,+0.000,0000,0000,0,0,00,00,00,00,0000,0240,0,+0.000\n";
+  var m_noz_blank = ":M-NOZ\n01,1,,,,,,,,,,,,,,,,,\n01,2,,,,,,,,,,,,,,,,,\n01,3,,,,,,,,,,,,,,,,,\n01,4,,,,,,,,,,,,,,,,,\n:M-NOZ-AS1\n01,1,,,,,,,,,,,,,,,,,\n01,2,,,,,,,,,,,,,,,,,\n01,3,,,,,,,,,,,,,,,,,\n01,4,,,,,,,,,,,,,,,,,\n:M-NOZ-AS2\n01,1,,,,,,,,,,,,,,,,,\n01,2,,,,,,,,,,,,,,,,,\n01,3,,,,,,,,,,,,,,,,,\n01,4,,,,,,,,,,,,,,,,,\n:M-STK\n01,1,1,,,,,,,,,,,,,,,,,\n01,1,2,,,,,,,,,,,,,,,,,\n01,1,3,,,,,,,,,,,,,,,,,\n01,1,4,,,,,,,,,,,,,,,,,\n01,2,1,,,,,,,,,,,,,,,,,\n01,2,2,,,,,,,,,,,,,,,,,\n01,2,3,,,,,,,,,,,,,,,,,\n01,2,4,,,,,,,,,,,,,,,,,\n01,3,1,,,,,,,,,,,,,,,,,\n01,3,2,,,,,,,,,,,,,,,,,\n01,3,3,,,,,,,,,,,,,,,,,\n01,3,4,,,,,,,,,,,,,,,,,\n01,4,1,,,,,,,,,,,,,,,,,\n01,4,2,,,,,,,,,,,,,,,,,\n01,4,3,,,,,,,,,,,,,,,,,\n01,4,4,,,,,,,,,,,,,,,,,\n";
+  var cmpnt_list = h.inUseParts.map(function (p, i) {
+    return [pad(i + 1, 4, 0), p];
+  });
+  var l_cmpnt = ":L-CMPNT\n" + cmpnt_list.map(function (c) {
+    return "".concat(c[0], ",").concat(c[1], ",,-,\n");
+  }).join("");
+  var feeder_blank = ":FEEDER\n"; // 01,1,00,003,0016,0,0000,-,,1,0,00.00,00.00,00
+
+  var tray_to_waste_blank = ":TRAY\n:T-CTRL\n01,1,0,15,15\n01,2,0,15,15\n:T-STEP\n:VIB-STICK\n:VIB-ESCAPE\n01,1,1,1,1,1,1\n01,2,1,1,1,1,1\n:WASTE-DSP\n0,+0000.000,+000.000,+000.00,+0.000,,S\n";
+  var image_fids = "+0000.000,+000.000,+000.00,+0.000,-,".concat(h.iFidEnbl, ",").concat(pad(h.iFid1x, 8, 3, 1), ",").concat(pad(h.iFid1y, 7, 3, 1), ",").concat(pad(h.iFid2x, 8, 3, 1), ",").concat(pad(h.iFid2y, 7, 3, 1), ",").concat(h.iFid1m, ",").concat(h.iFid2m, ",1,+0000.000,+000.000,01,+0000.000,+000.000,01,+0000.000,+000.000,01,00000,,\n");
+  var image_bbr = !h.lBadX && !h.lBadY ? "" : "".concat(pad(h.lBadX, 8, 3, 1), ",").concat(pad(h.lBadY, 7, 3, 1), ",+000.00,+0.000,0000,B,00,01,1,0000,00,0,0000,00,+0000.000,+000.000,+0000.000,+000.000,01,01,,,00001,-,01,1,0003,00,0,0000,00,0,0000,00,0,0000\n");
+  var hasOffsets = h.oDataPlain && h.oDataPlain.length > 0;
+  var lnAdd = image_bbr === "" ? 1 : 2;
+  var place = (h.pDataMap || []).map(function (p, i) {
+    var _cmpnt_list$find;
+
+    var cnum = ((_cmpnt_list$find = cmpnt_list.find(function (l) {
+      return l[1] === p[4];
+    })) === null || _cmpnt_list$find === void 0 ? void 0 : _cmpnt_list$find[0]) || "0000";
+    return "".concat(pad(p[1], 8, 3, 1), ",").concat(pad(p[2], 7, 3, 1), ",").concat(pad(p[3], 6, 2, 1), ",+0.000,").concat(cnum, ",").concat(p[5], ",00,01,1,0000,00,0,0000,00,+0000.000,+000.000,+0000.000,+000.000,01,01,").concat(p[0], ",,").concat(pad(i + lnAdd, 5, 0), ",-,01,1,0000,00,0,0000,00,0,0000,00,0,0000\n");
+  });
+  var place_text = place.join("");
+  var end_sym = hasOffsets ? "P" : "E";
+  var end_line = "+0000.000,+000.000,+000.00,+0.000,0000,".concat(end_sym, ",00,00,0,0000,00,0,0000,00,+0000.000,+000.000,+0000.000,+000.000,01,01,,,").concat(pad(place.length + 1, 5, 0), ",-,00,0,0000,00,0,0000,00,0,0000,00,0,0000\n");
+  var p_dat = ":P-DAT01\n".concat(image_fids).concat(image_bbr).concat(place_text).concat(end_line);
+  var offset = (h.oDataPlain || []).map(function (o, i) {
+    return "".concat(pad(i + 1, 4, 0), ",").concat(pad(o[0], 8, 3, 1), ",").concat(pad(o[1], 7, 3, 1), ",").concat(pad(o[2], 6, 2, 1), ",+0.000,").concat(o[3], ",,+0000.000,+000.000\n");
+  });
+  var offset_text = offset.join("");
+  var o_dat = !hasOffsets ? "" : ":O-DAT01\n".concat(offset_text).concat(pad(offset.length + 1, 4, 0), ",+0000.000,+000.000,+000.00,+0.000,E,,+0000.000,+000.000");
+  var fileConstruct = "".concat(first_line).concat(filePath, "\n").concat(line_opsw).concat(machine).concat(machine_op_1).concat(machine_op_2).concat(l_common).concat(l_board).concat(l_bbr).concat(l_recog).concat(l_mark).concat(l_setup_blank).concat(l_ope_blank).concat(l_pcb_h_blank).concat(l_back_pin_blank, ":L-JIG\n").concat(l_bc_blank, ":L-SWITCH\n0,0,0,0,0\n:DEBUG\n1\n:B-OPE\n0,000,0\n").concat(m_ope, ":M-ASST\n01,1,1,00,00,00,00,00,00,00,00,00,00\n").concat(m_speed_blank).concat(m_locate_blank).concat(m_noz_blank, ":M-PCB-H\n01,0\n:M-BACK-PIN01\n,\n0,20\n").concat(l_cmpnt).concat(feeder_blank).concat(tray_to_waste_blank).concat(p_dat).concat(o_dat);
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, ".psa"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(fileConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove(); // console.log(fileConstruct);
+  } else {
+    alert('document not found');
+  }
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/scripts/exportAdvantis.js
+function exportAdvantis_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = exportAdvantis_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function exportAdvantis_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return exportAdvantis_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return exportAdvantis_arrayLikeToArray(o, minLen); }
+
+function exportAdvantis_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function downAdvantis(filenameState, advBulkState) {
+  var y = advBulkState;
+
+  if (!y) {
+    return null;
+  }
+  /*
+    topTitle, subTitle, 
+    
+    bX, bY, bT, orginX, orginY,
+    
+    recImage, iFid1x, iFid1y, iFid2x, iFid2y,
+    gFidQty, gFid1x, gFid1y, gFid2x, gFid2y, gFid3x, gFid3y,
+    
+    oDataPlain // [0=x] [1=y] [2=theta] [3=control]
+  */
+
+
+  var pad = function pad(val) {
+    return Number.parseFloat(val).toFixed(4).toString();
+  };
+
+  var add = function add(a, b) {
+    return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+  };
+
+  var date = new Date().toLocaleString('en-GB', {
+    timeZone: 'America/Regina'
+  }).split(", ");
+  var dateArr = date[0].split("/");
+  var dateTxt = "".concat(dateArr[1], "/").concat(dateArr[0], "/").concat(dateArr[2]);
+  var product_path = "C:" + "\\" + "UPS 6.02.00" + "\\" + "usos" + "\\" + "product" + "\\" + filenameState + ".upf";
+  var board_path = "C:" + "\\" + "UPS 6.02.00" + "\\" + "USOS" + "\\" + "LIB" + "\\" + "BoardTemplate" + "\\" + filenameState + ".tpl";
+  var component_path = "C:" + "\\" + "UPS 6.02.00" + "\\" + "USOS" + "\\" + "LIB" + "\\" + "DB" + "\\" + "Master.cdb";
+  var config_path = "C:" + "\\" + "UPS 6.02.00" + "\\" + "USOS" + "\\" + "Config" + "\\" + "Machine.mcg";
+  var feeder_path = "C:" + "\\" + "UPS 6.02.00" + "\\" + "USOS" + "\\" + "LIB" + "\\" + "DB" + "\\" + "Feeder.fdb";
+  var header = "// Universal Instruments Comprehensive Import 2 File\n//\n// Product: ".concat(product_path, "\n//\n// Created by SM UPS+ Version 6.2.2.2\n// Created on ").concat(dateTxt, " at ").concat(date[1], "\n//\n\n");
+  var product = "Product : \"".concat(filenameState, ".upf\"\n   \"Board Name\" : \"").concat(board_path, "\"\n   \"Component Database Name\" : \"").concat(component_path, "\"\n   \"Configuration Name\" : \"").concat(config_path, "\"\n   \"Feeder Database Name\" : \"").concat(feeder_path, "\"\n   \"Feeder Template Name\" : \"\"\n   \"Name\" : \"").concat(product_path, "\"\n\n");
+  var product_options = "ProductOptions : \"\"\n   \"Description\" : \"".concat(y.topTitle, ", ").concat(y.subTitle, ", SMTx Conversion\"\n   \"Duplicate Feeders\" : \"0\"\n   \"Minimize Nozzle Changes\" : \"\"\n   \"Optimize Nozzle Changer\" : \"10\"\n   \"Reference X\" : \"").concat(pad(y.orginX), "\"\n   \"Reference Y\" : \"").concat(pad(y.orginY), "\"\n   \"Use Feeder Setup\" : \"11\"\n   \"Use Head Balancer\" : \"1\"\n   \"Use Nozzle Setup\" : \"11\"\n   \"Use Shuttle Feeder\" : \"00\"\n   \"Use Shuttle Nozzles\" : \"00\"\n   \"Use Spindles\" : \"000000000000000000000000000000011111100000000000000000000000\"\n\n");
+  var command_default = "Command : \"\"\n   Save : \"0\"\n\n";
+  var format_default = "Format : \"\"\n   \"Length Unit\" : \"Millimeters\"\n   \"Rotation Unit\" : \"Degrees\"\n\n";
+  var hasOffsets = y.oDataPlain && y.oDataPlain.length > 0;
+  var circX = '';
+
+  var _iterator = exportAdvantis_createForOfIteratorHelper(y.oDataPlain),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var o = _step.value;
+
+      if (o[0] != 0) {
+        circX = o[0];
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  var circY = '';
+
+  var _iterator2 = exportAdvantis_createForOfIteratorHelper(y.oDataPlain),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var _o = _step2.value;
+
+      if (_o[1] != 0) {
+        circY = _o[1];
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  var board_set = "BoardTemplate : \"".concat(board_path, "\" \"Clearance\" : \"0.0000\" \"Color\" : \"\" \"Deformity\" : \"0.0000\" \"Thickness\" : \"0.0000\"\n"); // ${pad(y.bT)}
+
+  var circuit_board = "Circuit : \"Board\" \"Name\" : \"Board\" \"Offset Of\" : \"Board\" \"X\" : \"0.0000\" \"Y\" : \"".concat(pad(y.bY), "\" \"X\" : \"0.0000\" \"Y\" : \"0.0000\" \"X\" : \"").concat(pad(y.bX), "\" \"Y\" : \"0.0000\" \"X\" : \"").concat(pad(y.bX), "\" \"Y\" : \"").concat(pad(y.bY), "\"\n");
+  var circuit_one = !hasOffsets ? "" : "Circuit : \"1\" \"Name\" : \"1\" \"Offset Of\" : \"1\" \"X\" : \"".concat(pad(y.orginX), "\" \"Y\" : \"").concat(pad(y.orginY), "\" \"X\" : \"").concat(pad(y.orginX), "\" \"Y\" : \"").concat(pad(add(y.orginY, circY)), "\" \"X\" : \"").concat(pad(add(y.orginX, circX)), "\" \"Y\" : \"").concat(pad(add(y.orginY, circY)), "\" \"X\" : \"").concat(pad(add(y.orginX, circX)), "\" \"Y\" : \"").concat(pad(y.orginY), "\"\n");
+  var offsets = !hasOffsets ? "" : y.oDataPlain.map(function (o, i) {
+    if (i == 0) {
+      return "";
+    } else {
+      return "Circuit : \"".concat(i + 1, "\" \"Name\" : \"").concat(i + 1, "\" \"Offset Of\" : \"1\" \"X\" : \"").concat(pad(o[0]), "\" \"Y\" : \"").concat(pad(o[1]), "\" \"Theta\" : \"").concat(pad(o[2]), "\"\n");
+    }
+  }).join("");
+  var board_template = "//*\n//* Board\n//*\n\n" + board_set + circuit_board + circuit_one + offsets + "\n";
+  var useFids = y.recImage ? [[y.iFid1x, y.iFid1y], [y.iFid2x, y.iFid2y]] : y.gFidQty < 3 ? [[y.gFid1x, y.gFid1y], [y.gFid2x, y.gFid2y]] : [[y.gFid1x, y.gFid1y], [y.gFid2x, y.gFid2y], [y.gFid3x, y.gFid3y]];
+  var fiducial_set = "//*\n//* Fiducials\n//*\n\n".concat(useFids.map(function (f, i) {
+    return "Fiducial : \"FID".concat(i + 1, "\" \"Circ\" : \"").concat(hasOffsets ? '1' : 'Board', "\" \"Fiducial Type\" : \"Disc57_0\" \"Ref ID\" : \"FID").concat(i + 1, "\" \"X\" : \"").concat(pad(f[0]), "\" \"Y\" : \"").concat(pad(f[1]), "\"\n");
+  }).join(""), "\n");
+  var pad_default = "//*\n//* Pad Sites\n//*\n\n";
+  var placement_default = "//*\n//* Placements\n//*\n\n"; // Placement : "U1" "Circ" : "1" "Component ID" : "80-RT-QFP" "Local" : "" "Process" : "Place" "Ref ID" : "U1" "Theta" : "180.000" "X" : "36.9010" "Y" : "20.5240" "ZZone" : "0" 
+
+  var slot_default = "//*\n//* Slots\n//*\n\n"; // Slot : "14" "Feeder" : "Track 4" "Component ID" : "8-SOIC" "Feeder Slot" : "14" "Track" : "1" "Rotation" : "270.000" 
+  // Slot : "32" "Feeder" : "Belt Reject" "Component ID" : "8-SOIC" "Feeder Slot" : "32" "Rotation" : "0.000" 
+
+  var magazine_default = "//*\n//* Magazines\n//*\n\n";
+  var sq_start = "//*\n//* Sequences\n//*\n\nSequence : \"Default\"\n   Section : \"Bad Sense\" \"Section Type\" : \"Bad Sense\"\n";
+  var fid_steps = !hasOffsets ? "      Step : \"1\" \"Step Type\" : \"Find\" \"Ref ID\" : \"FID1\" \"Circ\" : \"Board\" \"Bypass\" : \"0\"\n      Step : \"2\" \"Step Type\" : \"Find\" \"Ref ID\" : \"FID2\" \"Circ\" : \"Board\" \"Bypass\" : \"0\"\n" : y.oDataPlain.map(function (o, i) {
+    return "      Step : \"".concat((i + 1) * 2 - 1, "\" \"Step Type\" : \"Find\" \"Ref ID\" : \"FID1\" \"Circ\" : \"").concat(i + 1, "\" \"Bypass\" : \"0\"\n      Step : \"").concat((i + 1) * 2, "\" \"Step Type\" : \"Find\" \"Ref ID\" : \"FID2\" \"Circ\" : \"").concat(i + 1, "\" \"Bypass\" : \"0\"\n");
+  }).join("");
+  var sq_fids = "   Section : \"Fiducials\" \"Section Type\" : \"Fiducials\"\n" + fid_steps;
+  var sq_global = hasOffsets ? "   Section : \"Global Corrections\" \"Section Type\" : \"Global Corrections\"\n      Step : \"1\" \"Step Type\" : \"Global Correct\" \"Circ\" : \"1\" \"Scope\" : \"Selected Circuit and all Offsets\" \"Ref ID\" : \"FID1\" \"Fid Circuit\" : \"1\" \"Ref ID\" : \"FID2\" \"Fid Circuit\" : \"1\" \"Bypass\" : \"0\"\n" : "   Section : \"Global Corrections\" \"Section Type\" : \"Global Corrections\"\n      Step : \"1\" \"Step Type\" : \"Global Correct\" \"Circ\" : \"Board\" \"Scope\" : \"Selected Circuit\" \"Ref ID\" : \"FID1\" \"Fid Circuit\" : \"Board\" \"Ref ID\" : \"FID2\" \"Fid Circuit\" : \"Board\" \"Bypass\" : \"0\"\n";
+  var sq_end = "   Section : \"Placements\" \"Section Type\" : \"Placements\"\n   Section : \"Post Processing\" \"Section Type\" : \"Generic\"\n      Step : \"1\" \"Step Type\" : \"Repair\" \"Bypass\" : \"0\"\n\n";
+  var sequence_set = sq_start + sq_fids + sq_global + sq_end;
+  var fid_type_default = "//*\n//* Fiducial Types\n//*\n\n";
+  var local_default = "//*\n//* Local Corrections\n//*\n\nLocalCorrection : \"Center\" \"Ref ID\" : \"[Center]\" \"Circ\" : \"\"\nLocalCorrection : \"Bottom Left/Top Right\" \"Ref ID\" : \"[Bottom Left]\" \"Circ\" : \"\" \"Ref ID\" : \"[Top Right]\" \"Circ\" : \"\"\nLocalCorrection : \"Bottom Right/Top Left\" \"Ref ID\" : \"[Bottom Right]\" \"Circ\" : \"\" \"Ref ID\" : \"[Top Left]\" \"Circ\" : \"\"\n\n";
+  var component_default = "//*\n//* Components\n//*\n\n";
+  var feeder_default = "//*\n//* Feeders\n//*\n\n"; // const feeder_default = `//*\n//* Feeders\n//*\n\nFeeder : "Belt Reject"\n   "Name" : "Belt Reject" "Category" : "Reject Belt" "Groups" : "" "Description" : "" "Action" : "Add" "Alias" : ""\n   "Number of Slots" : "3" "Reference Slot" : "1"\n   "Left Edge Distance" : "0.0000" "Front Edge Distance" : "0.0000" "Width" : "0.0000" "Depth" : "0.0000"\n   "Pickup X" : "1.2700" "Pickup Y" : "-72.7710" "Pickup Tolerance X" : "0.0000" "Pickup Tolerance Y" : "0.0000" "Theta Pick Tolerance" : "0.000" "Pick Attempts" : "0"\n   "Vibrate Delay (Reject)" : "2.000" "Powered" : "1" "Number of Tracks (Reject)" : "1" "Track Width (Reject)" : "50.8000"`;
+
+  var fileConstruct = header + product + product_options + command_default + format_default + board_template + fiducial_set + pad_default + placement_default + slot_default + magazine_default + sequence_set + fid_type_default + local_default + component_default + feeder_default;
+
+  if (typeof document !== 'undefined') {
+    var link = document.createElement("a");
+    link.setAttribute('download', "".concat(filenameState, ".ci2"));
+    link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(fileConstruct)));
+    document.body.appendChild(link);
+    link.click();
+    link.remove(); // console.log(fileConstruct);
+  } else {
+    alert('document not found');
+  }
+}
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/components/theButtons.jsx
 
 var theButtons_BackButton = function BackButton(_ref) {
   var clearFileThing = _ref.clearFileThing;
   return /*#__PURE__*/external_react_default.a.createElement("button", {
     id: "doClear",
+    title: "Clear",
     className: "doAction",
     onClick: function onClick(e) {
       return clearFileThing(e);
@@ -800,6 +1579,7 @@ var theButtons_DownloadButton = function DownloadButton(_ref2) {
       downFunc = _ref2.downFunc;
   return /*#__PURE__*/external_react_default.a.createElement("button", {
     id: bID,
+    title: "Download",
     className: "doAction",
     onClick: function onClick(e) {
       return downFunc(e);
@@ -829,6 +1609,7 @@ var theButtons_PrintButton = function PrintButton(_ref3) {
       printFunc = _ref3.printFunc;
   return /*#__PURE__*/external_react_default.a.createElement("button", {
     id: pID,
+    title: "Print",
     className: "doAction",
     onClick: function onClick(e) {
       return printFunc(e);
@@ -866,9 +1647,16 @@ var theButtons_PrintButton = function PrintButton(_ref3) {
     r: "24"
   })));
 };
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/components/theWork.jsx
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/components/theWork.jsx
 
  // import lodash from 'lodash';
+
+
+
+
+
+
+
 
 
 
@@ -896,13 +1684,28 @@ var theWork_TheWork = function TheWork() {
 
   var _useState9 = Object(external_react_["useState"])(undefined),
       _useState10 = slicedToArray_default()(_useState9, 2),
-      partsState = _useState10[0],
-      partsSet = _useState10[1];
+      loadState = _useState10[0],
+      loadSet = _useState10[1];
 
-  var _useState11 = Object(external_react_["useState"])(null),
+  var _useState11 = Object(external_react_["useState"])(undefined),
       _useState12 = slicedToArray_default()(_useState11, 2),
-      errorState = _useState12[0],
-      errorSet = _useState12[1];
+      partsState = _useState12[0],
+      partsSet = _useState12[1];
+
+  var _useState13 = Object(external_react_["useState"])(undefined),
+      _useState14 = slicedToArray_default()(_useState13, 2),
+      advBulkState = _useState14[0],
+      advBulkSet = _useState14[1];
+
+  var _useState15 = Object(external_react_["useState"])(undefined),
+      _useState16 = slicedToArray_default()(_useState15, 2),
+      yamBulkState = _useState16[0],
+      yamBulkSet = _useState16[1];
+
+  var _useState17 = Object(external_react_["useState"])(null),
+      _useState18 = slicedToArray_default()(_useState17, 2),
+      errorState = _useState18[0],
+      errorSet = _useState18[1];
 
   Object(external_react_["useEffect"])(function () {
     var dropArea = null;
@@ -927,27 +1730,42 @@ var theWork_TheWork = function TheWork() {
     };
   }, []);
 
+  var setValues = function setValues(data) {
+    data.file && filenameSet(data.file);
+    data.board && boardSet(data.board);
+    data.place && placeSet(data.place);
+    data.load && loadSet(data.load);
+    data.parts && partsSet(data.parts);
+    data.yamaha && yamBulkSet(data.yamaha);
+    data.advantis && advBulkSet(data.advantis);
+    data.error && errorSet(data.error);
+  };
+
   var runFileThing = function runFileThing(file) {
     if (file) {
       workSet(true);
       setTimeout(function () {
-        var fr = new FileReader();
+        var fr = new FileReader(); // fr.load = function(e) { // or loadend (api changed?)
 
         fr.onload = function (e) {
           var rawText = fr.result;
 
           if (rawText) {
-            dataInputExtract(rawText, function (fn) {
-              return filenameSet(fn);
-            }, function (bd) {
-              return boardSet(bd);
-            }, function (pl) {
-              return placeSet(pl);
-            }, function (pn) {
-              return partsSet(pn);
-            }, function (er) {
-              return errorSet(er);
-            });
+            if (typeof rawText.split(/\n/g)[2] == 'string') {
+              if (rawText.includes(':CORE')) {
+                dataInputExtractHitachi(rawText, function (dt) {
+                  return setValues(dt);
+                });
+              } else if (rawText.includes(':L-COMMON')) {
+                dataInputExtract(rawText, function (dt) {
+                  return setValues(dt);
+                });
+              } else {
+                errorSet("Invalid");
+              }
+            } else {
+              errorSet("Invalid");
+            }
           }
         };
 
@@ -966,7 +1784,10 @@ var theWork_TheWork = function TheWork() {
     filenameSet(false);
     boardSet(undefined);
     placeSet(undefined);
+    loadSet(undefined);
     partsSet(undefined);
+    yamBulkSet(undefined);
+    advBulkSet(undefined);
     errorSet(undefined);
   };
 
@@ -974,99 +1795,23 @@ var theWork_TheWork = function TheWork() {
     if (htmlString && typeof document !== 'undefined') {
       var printableElement = document.createElement('iframe');
       printableElement.setAttribute('id', "printFrame");
+      printableElement.setAttribute('style', "display: none");
       document.body.appendChild(printableElement);
       var printframe = document.getElementById("printFrame");
       var printArea = printframe.contentWindow.document.getElementsByTagName("HTML")[0];
       printArea.innerHTML = htmlString;
       printframe.contentWindow.focus();
-      printframe.contentWindow.print();
-      printableElement.remove();
+      printframe.contentWindow.print(); // cleanup (browser compat)
+
+      setTimeout(function () {
+        return printableElement.remove();
+      }, 10);
     } else {
       alert('document not found');
     }
   };
 
-  function downBoard() {
-    var bd = boardState;
-    var boardConstruct = "".concat(filenameState, "\n\n").concat(bd === null || bd === void 0 ? void 0 : bd.topTitle, "\n\n").concat(bd === null || bd === void 0 ? void 0 : bd.subTitle, "\n\nBoard\nX\t").concat(bd === null || bd === void 0 ? void 0 : bd.bX, "\nY\t").concat(bd === null || bd === void 0 ? void 0 : bd.bY, "\nT\t").concat(bd === null || bd === void 0 ? void 0 : bd.bT, "\n\nOrgin Offsets\nX\t").concat(bd === null || bd === void 0 ? void 0 : bd.orginX, "\nY\t").concat(bd === null || bd === void 0 ? void 0 : bd.orginY, "\n\nFiducial Mark Size\nFid1\t").concat(bd === null || bd === void 0 ? void 0 : bd.fMark1, "\nFid2\t").concat(bd === null || bd === void 0 ? void 0 : bd.fMark2, "\n\nPanel Offsets\n").concat(bd.oDataMap ? bd.oDataMap.map(function (line, index) {
-      return "".concat(index + 1, "\t").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
-        return "".concat(cell, "\t");
-      }).join(''), "\n");
-    }).join('') : "undefined\n", "\nBad Mark\n").concat(bd !== null && bd !== void 0 && bd.lBadX ? "Global\t".concat(bd === null || bd === void 0 ? void 0 : bd.gBadX, "\t").concat(bd === null || bd === void 0 ? void 0 : bd.gBadY, "\nLocal\t").concat(bd === null || bd === void 0 ? void 0 : bd.lBadX, "\t").concat(bd === null || bd === void 0 ? void 0 : bd.lBadY, "\n") : "undefined\n");
-
-    if (typeof document !== 'undefined') {
-      var link = document.createElement("a");
-      link.setAttribute('download', "".concat(filenameState, "_board.txt"));
-      link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(boardConstruct)));
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } else {
-      alert('document not found');
-    }
-  }
-
-  function printBoard() {
-    var tbSy = "width:50%; border-collapse:collapse";
-    var hclSy = "border: 1px solid black; text-align: left;";
-    var clSy = "border: 1px solid black; text-align: right;";
-    var bd = boardState;
-    var brdHTML = "<div>\n        <h2>".concat(filenameState, "</h2>\n        <h3>").concat(bd === null || bd === void 0 ? void 0 : bd.topTitle, "</h3>\n        <h3>").concat(bd === null || bd === void 0 ? void 0 : bd.subTitle, "</h3>\n        <table style=\"").concat(tbSy, "\">\n          <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Board</th></th><tr>\n          <tr><td style=\"").concat(clSy, "\">X</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bX, "</big></td></tr>\n          <tr><td style=\"").concat(clSy, "\">Y</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bY, "</big></td></tr>\n          <tr><td style=\"").concat(clSy, "\">T</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.bT, "</big></td></tr>\n          <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Orgin Offsets</th></th><tr>\n          <tr><td style=\"").concat(clSy, "\">X</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.orginX, "</big></td></tr>\n          <tr><td style=\"").concat(clSy, "\">Y</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.orginY, "</big></td></tr>\n          <tr><th colspan=\"2\" style=\"").concat(hclSy, "\">Fiducial Mark Size</th></th><tr>\n          <tr><td style=\"").concat(clSy, "\">Fid1</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.fMark1, "</big></td></tr>\n          <tr><td style=\"").concat(clSy, "\">Fid2</td><td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.fMark2, "</big></td></tr>\n        </table>\n        <br />\n        <table style=\"").concat(tbSy, "\">\n          <tr><th colspan=\"4\" style=\"").concat(hclSy, "\">Panel Offsets</th></th><tr>\n          ").concat(bd.oDataMap ? bd.oDataMap.map(function (line, index) {
-      return "<tr>\n            <td>".concat(index + 1, "</td>\n              ").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
-        return "<td style=\"".concat(clSy, "\"><big>").concat(cell, "</big></td>");
-      }).join(''), "</tr>");
-    }).join('') : "<tr><td colspan='4'>undefined</td></tr>", "\n        </table>\n        <br />\n        <table style=\"").concat(tbSy, "\">\n          <tr><th colspan=\"3\" style=\"").concat(hclSy, "\">Bad Mark</th></tr>\n          ").concat(bd !== null && bd !== void 0 && bd.lBadX ? "<tr>\n            <td style=\"".concat(clSy, "\">Global</td>\n            <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.gBadX, "</big></td>\n            <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.gBadY, "</big></td>\n          </tr>\n          <tr>\n            <td style=\"").concat(clSy, "\">Local</td>\n            <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.lBadX, "</big></td>\n            <td style=\"").concat(clSy, "\"><big>").concat(bd === null || bd === void 0 ? void 0 : bd.lBadY, "</big></td>\n          </tr>") : "<tr><td colspan='3'>undefined</td></tr>", "\n        </table>\n      </div>");
-    printTextThing(brdHTML);
-  }
-
-  function downPnP() {
-    var pnpConstruct = placeState === null || placeState === void 0 ? void 0 : placeState.join("\n");
-
-    if (typeof document !== 'undefined') {
-      var link = document.createElement("a");
-      link.setAttribute('download', "".concat(filenameState, "_pick-place.csv"));
-      link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(pnpConstruct)));
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } else {
-      alert('document not found');
-    }
-  }
-
-  function printPnP() {
-    var tbSy = "width:75%; border-collapse:collapse";
-    var clSy = "border: 1px solid black; text-align: right;";
-    var pnpHTML = "<div>\n        <h2>".concat(filenameState, "</h2>\n        <table style=\"").concat(tbSy, "\">\n          ").concat(placeState === null || placeState === void 0 ? void 0 : placeState.map(function (line, index) {
-      return "<tr>\n            <td>".concat(index + 1, "</td>\n              ").concat(line === null || line === void 0 ? void 0 : line.map(function (cell) {
-        return "<td style=\"".concat(clSy, "\"><big>").concat(cell, "</big></td>");
-      }).join(''), "</tr>");
-    }).join(''), "\n        </table>\n      </div>");
-    printTextThing(pnpHTML);
-  }
-
-  function downParts() {
-    var partsConstruct = partsState.join("\n");
-
-    if (typeof document !== 'undefined') {
-      var link = document.createElement("a");
-      link.setAttribute('download', "".concat(filenameState, "_parts-list.txt"));
-      link.setAttribute('href', "data:text/plain;charset=utf-8,".concat(encodeURIComponent(partsConstruct)));
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } else {
-      alert('document not found');
-    }
-  }
-
-  function printParts() {
-    var pnpHTML = "<div>\n        <h2>".concat(filenameState, "</h2>\n        ").concat(partsState.map(function (line) {
-      return "<p>".concat(line, "</p>");
-    }).join(''), "\n      </div>");
-    printTextThing(pnpHTML);
-  }
-
+  errorState && console.error(errorState);
   return /*#__PURE__*/external_react_default.a.createElement(external_react_["Fragment"], null, errorState ? /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "centre errorZone"
   }, /*#__PURE__*/external_react_default.a.createElement("div", {
@@ -1097,46 +1842,73 @@ var theWork_TheWork = function TheWork() {
     className: "outputZone"
   }, /*#__PURE__*/external_react_default.a.createElement("p", null, filenameState), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "outputLine"
-  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Board"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
-    bID: "doBoardDown",
-    downFunc: function downFunc(e) {
-      return downBoard(e);
-    }
-  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Board"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
     pID: "doBoardPrint",
     printFunc: function printFunc(e) {
-      return printBoard(e);
+      return printBoard(filenameState, boardState, printTextThing);
+    }
+  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: "doBoardDown",
+    downFunc: function downFunc(e) {
+      return downBoard(filenameState, boardState);
     }
   }))), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "outputLine"
-  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Pick", /*#__PURE__*/external_react_default.a.createElement("wbr", null), "'n'", /*#__PURE__*/external_react_default.a.createElement("wbr", null), "Place"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
-    bID: "doPnpDown",
-    downFunc: function downFunc(e) {
-      return downPnP(e);
-    }
-  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Pick", /*#__PURE__*/external_react_default.a.createElement("wbr", null), "'n'", /*#__PURE__*/external_react_default.a.createElement("wbr", null), "Place"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
     pID: "doPnpPrint",
     printFunc: function printFunc(e) {
-      return printPnP(e);
+      return printPnP(filenameState, placeState, printTextThing);
+    }
+  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: "doPnpDown",
+    downFunc: function downFunc(e) {
+      return downPnP(filenameState, placeState);
     }
   }))), /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "outputLine"
-  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Parts List"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
-    bID: "doPartsDown",
-    downFunc: function downFunc(e) {
-      return downParts(e);
-    }
-  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Parts List"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
     pID: "doPartsPrint",
     printFunc: function printFunc(e) {
-      return printParts(e);
+      return printParts(filenameState, partsState, printTextThing);
+    }
+  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: "doPartsDown",
+    downFunc: function downFunc(e) {
+      return downParts(filenameState, partsState);
+    }
+  }))), loadState && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "outputLine",
+    key: "yamahasigmaload"
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Load Sheet"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_PrintButton, {
+    pID: "doLoadPrint",
+    printFunc: function printFunc(e) {
+      return printLoad(filenameState, loadState, printTextThing);
+    }
+  }), /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: "doLoadDown",
+    downFunc: function downFunc(e) {
+      return downLoad(filenameState, loadState);
+    }
+  }))), yamBulkState && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "outputLine"
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Sigma .psa"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: filenameState + 'doSigmaDown',
+    downFunc: function downFunc(e) {
+      return downSigma(filenameState, yamBulkState);
+    }
+  }))), advBulkState && /*#__PURE__*/external_react_default.a.createElement("div", {
+    className: "outputLine"
+  }, /*#__PURE__*/external_react_default.a.createElement("b", null, "Advantis .ci2"), /*#__PURE__*/external_react_default.a.createElement("span", null, /*#__PURE__*/external_react_default.a.createElement(theButtons_DownloadButton, {
+    bID: filenameState + 'doAdvantisDown',
+    downFunc: function downFunc(e) {
+      return downAdvantis(filenameState, advBulkState);
     }
   }))), /*#__PURE__*/external_react_default.a.createElement(theButtons_BackButton, {
     clearFileThing: clearFileThing
   })) : /*#__PURE__*/external_react_default.a.createElement("div", {
     className: "centre dropZone",
     id: "drop-area",
-    title: "Open .PGA File"
+    title: "Open .PGA or .PSA File"
   }, /*#__PURE__*/external_react_default.a.createElement("label", {
     htmlFor: "fileClickInput",
     id: "fileClickLabel",
@@ -1151,7 +1923,7 @@ var theWork_TheWork = function TheWork() {
     d: "M 6 3 L 6 29 L 26 29 L 26 9.59375 L 25.71875 9.28125 L 19.71875 3.28125 L 19.40625 3 Z M 8 5 L 18 5 L 18 11 L 24 11 L 24 27 L 8 27 Z M 20 6.4375 L 22.5625 9 L 20 9 Z"
   })), /*#__PURE__*/external_react_default.a.createElement("input", {
     type: "file",
-    accept: ".PGA",
+    accept: ".PGA, .PSA",
     multiple: false,
     onInput: function onInput(e) {
       return getFileThing(e);
@@ -1164,7 +1936,7 @@ var theWork_TheWork = function TheWork() {
 };
 
 /* harmony default export */ var theWork = (theWork_TheWork);
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/components/theLayout.jsx
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/components/theLayout.jsx
 
  // import lodash from 'lodash';
 
@@ -1176,8 +1948,9 @@ var theLayout_TheLayout = function TheLayout() {
       backgroundState = _useState2[0],
       backgroundSet = _useState2[1];
 
-  return /*#__PURE__*/external_react_default.a.createElement(external_react_["Fragment"], null, /*#__PURE__*/external_react_default.a.createElement("header", null, /*#__PURE__*/external_react_default.a.createElement("h1", null, "PGA", /*#__PURE__*/external_react_default.a.createElement("sup", null, "2"), "CSV")), /*#__PURE__*/external_react_default.a.createElement("main", null, backgroundState ? /*#__PURE__*/external_react_default.a.createElement("section", null, /*#__PURE__*/external_react_default.a.createElement("button", {
+  return /*#__PURE__*/external_react_default.a.createElement(external_react_["Fragment"], null, /*#__PURE__*/external_react_default.a.createElement("header", null, /*#__PURE__*/external_react_default.a.createElement("h1", null, "SMT Extractor")), /*#__PURE__*/external_react_default.a.createElement("main", null, backgroundState ? /*#__PURE__*/external_react_default.a.createElement("section", null, /*#__PURE__*/external_react_default.a.createElement("button", {
     id: "byeBttn",
+    title: "close",
     className: "navAction stickyNav",
     onClick: function onClick() {
       return backgroundSet(false);
@@ -1199,8 +1972,9 @@ var theLayout_TheLayout = function TheLayout() {
     strokeLinejoin: "round",
     strokeWidth: "32",
     d: "M320 320L192 192M192 320l128-128"
-  })), /*#__PURE__*/external_react_default.a.createElement("span", null, "Close")), /*#__PURE__*/external_react_default.a.createElement("h3", null, "Information"), /*#__PURE__*/external_react_default.a.createElement("p", null, "PGA", /*#__PURE__*/external_react_default.a.createElement("sup", null, "2"), "CSV is a utility to convert a PGA file back into simple text files. The placement locations are converted into a formatted pick and place CSV file. The overall board information and parts list are converted into plain text files."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Input files must be formatted as UTF-8 text files with a `.pga` extension. Reliable results should only be expected with program files optimized for Hitachi GXH Series machines."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Downloaded output files are formatted as UTF-8 text files with a `.csv` or `.txt` extension."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Printed output is generated as html for the browser's print utility. After the printer utility is closed the generated content is destroyed."), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Privacy"), /*#__PURE__*/external_react_default.a.createElement("p", null, "All files are processed locally. No file content or metadata is transported to any server, cloud or 3rd party service. No file content or metadata is cached in the web browser once the browser window is closed. File content or metadata is only saved to the local machine upon user action."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Be aware that content or metadata may be retained by your browser's download history or your computer's printer queue."), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Licence"), /*#__PURE__*/external_react_default.a.createElement("p", null, "MIT License"), /*#__PURE__*/external_react_default.a.createElement("p", null, "Copyright (c) 2021 - present, Commutron Industries Ltd."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:"), /*#__PURE__*/external_react_default.a.createElement("p", null, "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software."), /*#__PURE__*/external_react_default.a.createElement("p", null, "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")) : /*#__PURE__*/external_react_default.a.createElement(theWork, null)), /*#__PURE__*/external_react_default.a.createElement("footer", null, /*#__PURE__*/external_react_default.a.createElement("button", {
+  })), /*#__PURE__*/external_react_default.a.createElement("span", null, "Close")), /*#__PURE__*/external_react_default.a.createElement("h3", null, "Information"), /*#__PURE__*/external_react_default.a.createElement("p", null, "SMT Extractor (aka SMT\xD7, formerly PGA", /*#__PURE__*/external_react_default.a.createElement("sup", null, "2"), "CSV) is a utility to convert PGA and PSA files. The placement locations are converted into a machine readable pick and place CSV file. The overall board information, parts list and load sheet are converted into human optimized plain text files. Sigma conversion is saved as a `.psa` file that can be opened by NT-100 or transfered to a Yamaha Sigma machine; the program will need to be optimized with NT-100 or on machine before it will run. Advantis conversion is saved as a `.ci2` file that can be imported by the UIC Advantis 'Product Editor' or 'Comprehensive Import'. Components are not included in the `.ci2` file, they will need to be added with the Pick'n'Place file and UIC Advantis' 'CAD Import'; the program will need to be optimized on machine before it will run. (ci2 files are compatible with many other modern UIC machines but not GSMs running OS/2.)"), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Import"), /*#__PURE__*/external_react_default.a.createElement("p", null, "Input files must be formatted as UTF-8 text files with a `.pga` or `.psa` extension. Reliable results should only be expected with program files formatted for Hitachi GXH-1S or Yamaha Sigma GS5II machines."), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Export"), /*#__PURE__*/external_react_default.a.createElement("p", null, "Downloaded output files are formatted as UTF-8 text files with a `.csv`, `.txt`, `.psa` or `.ci2` extension."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Printed output is generated as html for the browser's print utility. After the printer utility is closed the generated content is destroyed."), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Privacy"), /*#__PURE__*/external_react_default.a.createElement("p", null, "All files are processed locally. No file content or metadata is transported to any server, cloud or 3rd party service. No file content or metadata is cached in the web browser once the browser window is closed. File content or metadata is only saved to the local machine upon user action."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Be aware that content or metadata may be retained by your browser's download history or your computer's printer queue."), /*#__PURE__*/external_react_default.a.createElement("h4", null, "Licence"), /*#__PURE__*/external_react_default.a.createElement("p", null, "MIT License"), /*#__PURE__*/external_react_default.a.createElement("p", null, "Copyright (c) 2021 - present, Commutron Industries Ltd."), /*#__PURE__*/external_react_default.a.createElement("p", null, "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:"), /*#__PURE__*/external_react_default.a.createElement("p", null, "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software."), /*#__PURE__*/external_react_default.a.createElement("p", null, "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")) : /*#__PURE__*/external_react_default.a.createElement(theWork, null)), /*#__PURE__*/external_react_default.a.createElement("footer", null, /*#__PURE__*/external_react_default.a.createElement("button", {
     id: "heloBttn",
+    title: "Information",
     className: "navAction",
     onClick: function onClick() {
       return backgroundSet(true);
@@ -1231,11 +2005,11 @@ var theLayout_TheLayout = function TheLayout() {
     d: "M208 340h88"
   }), /*#__PURE__*/external_react_default.a.createElement("path", {
     d: "M248 130a26 26 0 1026 26 26 26 0 00-26-26z"
-  }))), /*#__PURE__*/external_react_default.a.createElement("span", null, "Commutron Industries Ltd. \xA92021")));
+  }))), /*#__PURE__*/external_react_default.a.createElement("span", null, "Commutron Industries Ltd. \xA92023")));
 };
 
 /* harmony default export */ var theLayout = (theLayout_TheLayout);
-// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin/src/App.js
+// CONCATENATED MODULE: /mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/App.js
 
 
 
@@ -1246,15 +2020,15 @@ function App() {
   }), /*#__PURE__*/external_react_default.a.createElement("meta", {
     name: "viewport",
     content: "width=device-width, initial-scale=1"
-  }), /*#__PURE__*/external_react_default.a.createElement("title", null, "PGA\xB2CSV"), /*#__PURE__*/external_react_default.a.createElement("meta", {
+  }), /*#__PURE__*/external_react_default.a.createElement("title", null, "SMT\xD7"), /*#__PURE__*/external_react_default.a.createElement("meta", {
     name: "application-name",
-    content: "PGA\xB2CSV"
+    content: "SMT\xD7"
   }), /*#__PURE__*/external_react_default.a.createElement("meta", {
     name: "theme-color",
     content: "#ce6a85"
   }), /*#__PURE__*/external_react_default.a.createElement("meta", {
     name: "description",
-    content: "Convert a Hitachi PGA program file into CSV and plain text"
+    content: "Convert Hitachi/Yamaha program files into CSV and plain text"
   }), /*#__PURE__*/external_react_default.a.createElement("meta", {
     name: "rating",
     content: "General"
@@ -1264,14 +2038,26 @@ function App() {
   }), /*#__PURE__*/external_react_default.a.createElement("link", {
     rel: "icon",
     sizes: "192x192",
-    href: "/pga-circle-pink-192.png"
+    href: "/android-chrome-192x192.png"
+  }), /*#__PURE__*/external_react_default.a.createElement("link", {
+    rel: "icon",
+    sizes: "512x512",
+    href: "/android-chrome-512x512.png"
   }), /*#__PURE__*/external_react_default.a.createElement("link", {
     rel: "apple-touch-icon",
-    href: "/pga-circle-pink-512.png",
+    href: "/apple-touch-icon.png",
     color: "white"
   }), /*#__PURE__*/external_react_default.a.createElement("link", {
+    rel: "icon",
+    sizes: "16x16",
+    href: "/favicon-16x16.png"
+  }), /*#__PURE__*/external_react_default.a.createElement("link", {
+    rel: "icon",
+    sizes: "32x32",
+    href: "/favicon-32x32.png"
+  }), /*#__PURE__*/external_react_default.a.createElement("link", {
     rel: "mask-icon",
-    href: "/pga-circle-pink.svg",
+    href: "/smtx-circle-pink.svg",
     color: "white"
   })), /*#__PURE__*/external_react_default.a.createElement(theLayout, null));
 }
@@ -1458,7 +2244,7 @@ module.exports = require("react-dom");
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static/lib/browser");
+module.exports = require("/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules/react-static/lib/browser");
 
 /***/ }),
 /* 10 */
@@ -1501,16 +2287,9 @@ module.exports = require("hoist-non-react-statics");
 
 /***/ }),
 /* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-/* harmony default export */ __webpack_exports__["default"] = (function () {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "404 - thats not it :("));
-});
+module.exports = require("/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/artifacts/__react_static_root__/node_modules/react-static/lib/browser/components/Default404");
 
 /***/ }),
 /* 14 */
@@ -1769,29 +2548,29 @@ var universalOptions = {
   ignoreBabelRename: true
 };
 var t_0 = react_universal_component__WEBPACK_IMPORTED_MODULE_3___default()(babel_plugin_universal_import_universalImport__WEBPACK_IMPORTED_MODULE_1___default()({
-  id: "__react_static_root__/src/pages/404.js",
+  id: "__react_static_root__/node_modules/react-static/lib/browser/components/Default404",
   load: function load() {
-    return Promise.all([Promise.resolve(/* import() | __react_static_root__/src/pages/404 */).then(__webpack_require__.bind(null, 13))]).then(function (proms) {
+    return Promise.all([Promise.resolve(/* import() */).then(__webpack_require__.t.bind(null, 13, 7))]).then(function (proms) {
       return proms[0];
     });
   },
   path: function path() {
-    return path__WEBPACK_IMPORTED_MODULE_0___default.a.join(__dirname, '__react_static_root__/src/pages/404.js');
+    return path__WEBPACK_IMPORTED_MODULE_0___default.a.join(__dirname, '__react_static_root__/node_modules/react-static/lib/browser/components/Default404');
   },
   resolve: function resolve() {
     return /*require.resolve*/(13);
   },
   chunkName: function chunkName() {
-    return "__react_static_root__/src/pages/404";
+    return "__react_static_root__/node_modules/react-static/lib/browser/components/Default404";
   }
 }), universalOptions);
-t_0.template = '__react_static_root__/src/pages/404.js'; // Template Map
+t_0.template = '__react_static_root__/node_modules/react-static/lib/browser/components/Default404'; // Template Map
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  '__react_static_root__/src/pages/404.js': t_0
+  '__react_static_root__/node_modules/react-static/lib/browser/components/Default404': t_0
 }); // Not Found Template
 
-var notFoundTemplate = "__react_static_root__/src/pages/404.js";
+var notFoundTemplate = "__react_static_root__/node_modules/react-static/lib/browser/components/Default404";
 /* WEBPACK VAR INJECTION */}.call(this, "/"))
 
 /***/ }),
@@ -2325,7 +3104,7 @@ module.exports = require("@babel/runtime/helpers/objectWithoutProperties");
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = require("/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static/lib/browser/hooks/useStaticInfo");
+module.exports = require("/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules/react-static/lib/browser/hooks/useStaticInfo");
 
 /***/ }),
 /* 35 */
@@ -2406,7 +3185,7 @@ exports = module.exports = __webpack_require__(38)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap);", ""]);
 
 // Module
-exports.push([module.i, "* {\r\n  scroll-behavior: smooth;\r\n  box-sizing: border-box;\r\n}\r\n@-moz-document url-prefix() {\r\n  body {\r\n    font-weight: bold !important;\r\n  }\r\n}\r\n\r\nbody {\r\n  font-family: 'Source Code Pro', monospace;\r\n  font-weight: 300;\r\n  font-size: 16px;\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 100vh;\r\n  width: 100vw;\r\n  overflow: hidden;\r\n}\r\n\r\nheader{\r\n  height: 10vh;\r\n  margin: 0;\r\n  padding: 0 3vw;\r\n  background-color: #ce6a85;\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  overflow: hidden;\r\n}\r\nheader h1 { \r\n  font-size: 6vh;\r\n}\r\nmain {\r\n  height: 83vh;\r\n  width: 100vw;\r\n  padding: 1vh 1vw;\r\n}\r\n\r\nsection {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n  border: 1vh double #2f2f2f;\r\n  padding: 5vh 5vw;\r\n}\r\n.stickyNav {\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 0;\r\n  float: right;\r\n}\r\nfooter {\r\n  height: 7vh;\r\n  width: 100vw;\r\n  padding: 0 3vw;\r\n  overflow: hidden;\r\n  background-color: #2f2f2f;\r\n  color: white;\r\n  font-size: 2vh;\r\n  text-align: right;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n}\r\n\r\n.centre {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  flex-wrap: nowrap;\r\n}\r\n\r\n.dropZone {\r\n  border: 2vmin dashed rgba(206, 106, 133, 0.4);\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5vh 5vw;\r\n}\r\n\r\n@-webkit-keyframes pulse {\r\n  0% { box-shadow: 0 0 0 0 rgba(206, 109, 139, 0.3); }\r\n}\r\n\r\n@keyframes pulse {\r\n  0% { box-shadow: 0 0 0 0 rgba(206, 109, 139, 0.3); }\r\n}\r\n\r\n.fileInput { opacity: 0; }\r\n.fileInput, .dropiconWrap {\r\n  height: 70vmin;\r\n  width: 70vmin;\r\n  border-radius: 50%;\r\n  cursor: pointer;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\n.dropiconWrap {\r\n  position:relative;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  background-color: rgba(206, 106, 133, 0.4);\r\n}\r\n.dropiconWrap.work {\r\n  transform: rotate(5deg);\r\n  transition: all 500ms ease;\r\n  -webkit-animation: pulse 0.5s;\r\n          animation: pulse 0.5s;\r\n  -webkit-animation-iteration-count: infinite;\r\n          animation-iteration-count: infinite;\r\n  box-shadow: 0 0 0 1vmax white,\r\n              0 0 0 2vmax rgba(206, 109, 139, 0.3);\r\n}\r\n.dropiconWrap:before, .dropicon {\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n}\r\n.dropiconWrap:before {\r\n  content: \".PGA\";\r\n  color: rgb(152, 82, 119);\r\n  font-size: 7vmin;\r\n  font-weight: 600;\r\n}\r\n.dropicon {  \r\n  transition: all 250ms ease;\r\n  fill: rgb(152, 82, 119);\r\n}\r\n.dropiconWrap:active .dropicon,\r\n.dropiconWrap:focus-within .dropicon,\r\n.dropiconWrap:focus .dropicon { \r\n  filter: drop-shadow(1px 1px 20px rgb(206, 106, 133));\r\n}\r\n\r\n.errorZone {\r\n  padding: 5vh 5vw;\r\n}\r\n.errorZone > svg:first-of-type {\r\n  fill: #2f2f2f;\r\n  color: #2f2f2f;\r\n}\r\n.errorZone > h2 {\r\n  font-size: 5vh;\r\n  margin: 0 0 2vh 0;\r\n  text-align: center;\r\n}\r\n.erroriconWrap {\r\n  max-height: 70vh;\r\n}\r\n.erroricon {\r\n  height: 45vh;\r\n}\r\n\r\n.outputZone {\r\n  margin: 5vh 5vw 0 5vw;\r\n}\r\n.outputZone p {\r\n  margin: 0;\r\n  font-size: 3vh;\r\n}\r\n.outputLine {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin: 2vh 0;\r\n  border-top: 2px groove #ce6a85;\r\n  padding: 5vh 3vw;\r\n}\r\n.outputLine > b {\r\n  font-size: 3vh;\r\n}\r\n.outputLine > span {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n}\r\n\r\n.doAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 6vh;\r\n  min-width: 6vh;\r\n  margin: 0 2vw;\r\n  padding: 0.5vh;\r\n  font-size: 2.5vh;\r\n  background: #ce6a85;\r\n  border: 5px solid #ce6a85;\r\n  border-radius: 10px;\r\n  transition: all 100ms ease-out 75ms;\r\n  box-shadow: 0px 1px 0px 1px #985277,\r\n              0px 1px 15px -5px #2f2f2f;\r\n}\r\n.doAction:hover, .doAction:focus, .doAction:active {\r\n  box-shadow: 0px 8px 0px 0px #985277,\r\n              0px 10px 0px 0px #985277,\r\n              0px 12px 0px 0px #985277,\r\n              0px 14px 15px -5px #2f2f2f;\r\n  outline: none;\r\n}\r\n\r\n.navAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 6vh;\r\n  min-width: 6vh;\r\n  margin: 0 1vw;\r\n  padding: 0.5vh 1vh;\r\n  font-size: 2vh;\r\n  font-weight: 400;\r\n  background: #2f2f2f;\r\n  color: white;\r\n  border: none;\r\n  border-radius: 25px;\r\n  transition: all 100ms ease-out 75ms;\r\n}\r\n.navAction svg {\r\n  fill: white;\r\n  stroke: white;\r\n}\r\n.navAction:hover, .navAction:active {\r\n  box-shadow: 0 0 0 0.5vh #2f2f2f;\r\n}", ""]);
+exports.push([module.i, "* {\r\n  scroll-behavior: smooth;\r\n  box-sizing: border-box;\r\n  --accent: #ce6a85;\r\n  --dark: #2f2f2f;\r\n  --light: white;\r\n}\r\n@-moz-document url-prefix() {\r\n  body {\r\n    font-weight: bold !important;\r\n  }\r\n}\r\n\r\nbody {\r\n  font-family: 'Source Code Pro', monospace;\r\n  font-weight: 300;\r\n  font-size: 16px;\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 100vh;\r\n  width: 100vw;\r\n  overflow: hidden;\r\n}\r\n\r\nheader{\r\n  height: 8dvh;\r\n  margin: 0;\r\n  padding: 0 3vw;\r\n  background-color: var(--accent);\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  overflow: hidden;\r\n}\r\nheader h1 { \r\n  font-size: 6vh;\r\n  /* text-wrap: nowrap; */\r\n  white-space: nowrap;\r\n}\r\nmain {\r\n  height: 85dvh;\r\n  width: 100vw;\r\n  padding: 0;\r\n}\r\n\r\nsection {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow-y: overlay;\r\n  overflow-x: hidden;\r\n  border: 1vh double var(--dark);\r\n  padding: 5vh 5vw;\r\n}\r\n.stickyNav {\r\n  position: sticky;\r\n  top: 0;\r\n  float: right;\r\n}\r\nfooter {\r\n  height: 7dvh;\r\n  width: 100vw;\r\n  padding: 0 3vw;\r\n  overflow: hidden;\r\n  background-color: var(--dark);\r\n  color: var(--light);\r\n  font-size: 2vh;\r\n  line-height: 1;\r\n  text-align: right;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n}\r\n\r\n.centre {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  flex-wrap: nowrap;\r\n}\r\n\r\n.dropZone {\r\n  border: 2vmin dashed rgba(206, 106, 133, 0.4);\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5vh 5vw;\r\n}\r\n.dropZone::drop {\r\n  border: 2vmin dashed rgba(206, 106, 133, 0.8);\r\n}\r\n\r\n@keyframes pulse {\r\n  0% { box-shadow: 0 0 0 0 rgba(206, 109, 139, 0.3); }\r\n}\r\n\r\n.fileInput { opacity: 0; }\r\n.fileInput, .dropiconWrap {\r\n  height: 70vmin;\r\n  width: 70vmin;\r\n  border-radius: 50%;\r\n  cursor: pointer;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\n.dropiconWrap {\r\n  position:relative;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  background-color: rgba(206, 106, 133, 0.4);\r\n}\r\n.dropiconWrap.work {\r\n  transform: rotate(5deg);\r\n  transition: all 500ms ease;\r\n  animation: pulse 0.5s;\r\n  animation-iteration-count: infinite;\r\n  box-shadow: 0 0 0 1vmax var(--light),\r\n              0 0 0 2vmax rgba(206, 109, 139, 0.3);\r\n}\r\n.dropiconWrap:before, .dropicon {\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n}\r\n.dropiconWrap:before {\r\n  content: \".PGA\\a.PSA\";\r\n  text-align: center;\r\n  color: rgb(152, 82, 119);\r\n  font-size: 7vmin;\r\n  font-weight: 600;\r\n}\r\n.dropicon {  \r\n  transition: all 250ms ease;\r\n  fill: rgb(152, 82, 119);\r\n}\r\n.dropiconWrap:active .dropicon,\r\n.dropiconWrap:focus-within .dropicon,\r\n.dropiconWrap:focus .dropicon { \r\n  filter: drop-shadow(1px 1px 20px rgb(206, 106, 133));\r\n}\r\n\r\n.errorZone {\r\n  padding: 5vh 5vw;\r\n}\r\n.errorZone > svg:first-of-type {\r\n  fill: var(--dark);\r\n  color: var(--dark);\r\n}\r\n.errorZone > h2 {\r\n  font-size: 5vh;\r\n  margin: 0 0 2vh 0;\r\n  text-align: center;\r\n}\r\n.erroriconWrap {\r\n  max-height: 70vh;\r\n}\r\n.erroricon {\r\n  height: 45vh;\r\n}\r\n\r\n.outputZone {\r\n  height: 100%;\r\n  padding: 5dvh 5dvw;\r\n  overflow-y: overlay;\r\n  overflow-x: hidden;\r\n}\r\n.outputZone p {\r\n  margin: 0;\r\n  font-size: 2.5vh;\r\n}\r\n.outputLine {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  border-top: 2px groove var(--accent);\r\n  padding: 3vh 3vw;\r\n}\r\n.outputLine > b {\r\n  font-size: 2.5vh;\r\n}\r\n.outputLine > span {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n}\r\n\r\n.doAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 6vh;\r\n  max-height: 5rem;\r\n  min-height: 1rem;\r\n  min-width: 6vh;\r\n  margin: 0 2vw;\r\n  padding: 0.5vh;\r\n  font-size: 2.5vh;\r\n  font-size: clamp(10px, 2.5dvh, 18px);\r\n  background: var(--accent);\r\n  border: 5px solid var(--accent);\r\n  border-radius: 10px;\r\n  transition: all 100ms ease-out 75ms;\r\n  box-shadow: 0px 1px 0px 1px #985277,\r\n              0px 1px 15px -5px var(--dark);\r\n}\r\n.doAction:hover, .doAction:focus, .doAction:active {\r\n  box-shadow: 0px 0px 0px 5px #985277,\r\n              0px 5px 20px -5px var(--dark);\r\n  outline: none;\r\n}\r\n\r\n.navAction {\r\n  cursor: pointer;\r\n  display: flex;\r\n  align-items: center;\r\n  height: 6vh;\r\n  min-width: 6vh;\r\n  margin: 0 1vw;\r\n  padding: 0.5vh 1vh;\r\n  font-size: 2vh;\r\n  font-weight: 400;\r\n  background: var(--dark);\r\n  color: var(--light);\r\n  border: none;\r\n  border-radius: 25px;\r\n  transition: all 100ms ease-out 75ms;\r\n}\r\n.navAction svg {\r\n  fill: var(--light);\r\n  stroke: var(--light);\r\n}\r\n.navAction:hover, .navAction:active {\r\n  box-shadow: 0 0 0 0.5vh var(--dark);\r\n}", ""]);
 
 
 

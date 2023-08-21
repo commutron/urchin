@@ -16,29 +16,29 @@
   "entry": "index.js",
   "plugins": [
     [
-      "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-source-filesystem/node.api.js",
+      "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules/react-static-plugin-source-filesystem/node.api.js",
       {
-        "location": "/mnt/c/Users/Scuba/Sites/urchin/src/pages"
+        "location": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src/pages"
       }
     ],
-    "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-reach-router/browser.api.js",
-    "/mnt/c/Users/Scuba/Sites/urchin/node_modules/react-static-plugin-sitemap/dist/node.api.js",
-    "/mnt/c/Users/Scuba/Sites/urchin"
+    "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules/react-static-plugin-reach-router/browser.api.js",
+    "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules/react-static-plugin-sitemap/dist/node.api.js",
+    "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]"
   ],
   "paths": {
-    "ROOT": "/mnt/c/Users/Scuba/Sites/urchin",
-    "SRC": "/mnt/c/Users/Scuba/Sites/urchin/src",
-    "DIST": "/mnt/c/Users/Scuba/Sites/urchin/dist",
-    "ASSETS": "/mnt/c/Users/Scuba/Sites/urchin/dist",
-    "PLUGINS": "/mnt/c/Users/Scuba/Sites/urchin/plugins",
-    "TEMP": "/mnt/c/Users/Scuba/Sites/urchin/tmp",
-    "ARTIFACTS": "/mnt/c/Users/Scuba/Sites/urchin/artifacts",
-    "PUBLIC": "/mnt/c/Users/Scuba/Sites/urchin/public",
-    "NODE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin/node_modules",
-    "EXCLUDE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin/node_modules",
-    "PACKAGE": "/mnt/c/Users/Scuba/Sites/urchin/package.json",
-    "HTML_TEMPLATE": "/mnt/c/Users/Scuba/Sites/urchin/dist/index.html",
-    "STATIC_DATA": "/mnt/c/Users/Scuba/Sites/urchin/dist/staticData"
+    "ROOT": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]",
+    "SRC": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/src",
+    "DIST": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/dist",
+    "ASSETS": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/dist",
+    "PLUGINS": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/plugins",
+    "TEMP": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/tmp",
+    "ARTIFACTS": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/artifacts",
+    "PUBLIC": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/public",
+    "NODE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules",
+    "EXCLUDE_MODULES": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/node_modules",
+    "PACKAGE": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/package.json",
+    "HTML_TEMPLATE": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/dist/index.html",
+    "STATIC_DATA": "/mnt/c/Users/Scuba/Sites/urchin_[pga-csv_converter]/dist/staticData"
   },
   "siteRoot": "/",
   "basePath": "",
