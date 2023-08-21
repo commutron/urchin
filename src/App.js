@@ -11,22 +11,24 @@ export default function App() {
       <Head>
         <meta charSet="UTF-8" />          
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>PGA²CSV</title>
+        <title>SMT×</title>
 
-        <meta name="application-name" content="PGA²CSV" />
+        <meta name="application-name" content="SMT×" />
 
         <meta name="theme-color" content="#ce6a85" />
 
-        <meta name="description" content="Convert a Hitachi PGA program file into CSV and plain text" />
+        <meta name="description" content="Convert Hitachi/Yamaha program files into CSV and plain text" />
         <meta name="rating" content="General" />
 
         <link rel="manifest" href="/manifest.json"></link>
 
-        <link rel="icon" sizes="192x192" href="/pga-circle-pink-192.png" />
+        <link rel="icon" sizes="192x192" href="/android-chrome-192x192.png" />
+        <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" color="white" />
+        <link rel="icon" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" sizes="32x32" href="/favicon-32x32.png" />
 
-        <link rel="apple-touch-icon" href="/pga-circle-pink-512.png" color="white" />
-
-        <link rel="mask-icon" href="/pga-circle-pink.svg" color="white" />
+        <link rel="mask-icon" href="/smtx-circle-pink.svg" color="white" />
       </Head>
       <TheLayout />
     </Root>

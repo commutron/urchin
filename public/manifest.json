@@ -1,7 +1,7 @@
 {
-  "name": "PGA²CSV",
-  "short_name": "PGA²CSV",
-  "description": "Convert a Hitachi PGA program file into CSV and plain text",
+  "name": "SMT Extractor",
+  "short_name": "SMT×",
+  "description": "Convert Hitachi/Yamaha program files into CSV and plain text",
   "dir": "ltr",
   "lang": "English",
   "start_url": "/",
@@ -12,13 +12,13 @@
   "theme_color": "#ce6a85",
   "icons": [
     {
-      "src": "/pga-circle-pink-192.png",
+      "src": "/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "/pga-circle-pink-512.png",
+      "src": "/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"

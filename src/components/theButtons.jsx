@@ -3,7 +3,8 @@ import React from 'react'
 
 export const BackButton = ({ clearFileThing })=> (
   <button 
-    id='doClear' 
+    id='doClear'
+    title='Clear'
     className='doAction'
     onClick={(e)=>clearFileThing(e)}>
     <svg 
@@ -19,6 +20,7 @@ export const BackButton = ({ clearFileThing })=> (
 export const DownloadButton = ({ bID, downFunc })=> (
   <button 
     id={bID}
+    title='Download'
     className='doAction'
     onClick={(e)=>downFunc(e)}>
     <svg 
@@ -33,6 +35,7 @@ export const DownloadButton = ({ bID, downFunc })=> (
 export const PrintButton = ({ pID, printFunc })=> (
   <button 
     id={pID}
+    title="Print"
     className='doAction'
     onClick={(e)=>printFunc(e)}>
     <svg 

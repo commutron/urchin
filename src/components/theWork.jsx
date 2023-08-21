@@ -1,7 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react'
 // import lodash from 'lodash';
 
-import dataInputExtract from '../scripts/dataInputExtract';
+import dataInputExtractHitachi from '../scripts/dataInputExtractHitachi';
+import dataInputExtractYamaha from '../scripts/dataInputExtractYamaha';
+import { downPnP, printPnP } from '../scripts/exportPnP';
+import { downBoard, printBoard } from '../scripts/exportBoard';
+import { downLoad, printLoad } from '../scripts/exportLoad';
+import { downParts, printParts } from '../scripts/exportParts';
+import { downSigma } from '../scripts/exportSigma';
+import { downAdvantis } from '../scripts/exportAdvantis';
 import { BackButton, DownloadButton, PrintButton } from './theButtons';
 
 const TheWork = ()=> {
@@ -11,7 +18,11 @@ const TheWork = ()=> {
   const [ filenameState, filenameSet ] = useState(false);
   const [ boardState, boardSet ] = useState(undefined);
   const [ placeState, placeSet ] = useState(undefined);
+  const [ loadState, loadSet ] = useState(undefined);
   const [ partsState, partsSet ] = useState(undefined);
+
+  const [ advBulkState, advBulkSet ] = useState(undefined);
+  const [ yamBulkState, yamBulkSet ] = useState(undefined);
 
   const [ errorState, errorSet ] = useState(null);
 
@@ -37,22 +48,56 @@ const TheWork = ()=> {
     return ()=> dropArea && dropArea.removeEventListener;
   },[]);
 
+  const setValues = (data)=> {
+    
+    data.file && filenameSet(data.file);
+        
+    data.board && boardSet(data.board);
+    
+    data.place && placeSet(data.place);
+    
+    data.load && loadSet(data.load);
+
+    data.parts && partsSet(data.parts);
+
+    data.yamaha && yamBulkSet(data.yamaha);
+  
+    data.advantis && advBulkSet(data.advantis);
+
+    data.error && errorSet(data.error);
+
+  };
+
   const runFileThing = (file)=> {
     if(file) {
       workSet(true);
       setTimeout(() => {
         var fr = new FileReader();
+        // fr.load = function(e) { // or loadend (api changed?)
         fr.onload = function(e) {
           const rawText = fr.result;
-            if(rawText) {
-            dataInputExtract(
-              rawText,
-              (fn)=>filenameSet(fn),
-              (bd)=>boardSet(bd),
-              (pl)=>placeSet(pl),
-              (pn)=>partsSet(pn),
-              (er)=>errorSet(er)
-            );
+          if(rawText) {
+            if(typeof rawText.split(/\n/g)[2] == 'string') {
+              
+              if( rawText.includes(':CORE') ) {
+
+                dataInputExtractHitachi(
+                  rawText,
+                  (dt)=>setValues(dt)
+                );
+
+              }else if( rawText.includes(':L-COMMON') ) {
+                
+                dataInputExtractYamaha(
+                  rawText,
+                  (dt)=>setValues(dt)
+                );
+              }else{
+                errorSet("Invalid");
+              }
+            }else{
+              errorSet("Invalid");
+            }  
           }
         };
         fr.readAsText(file);
@@ -70,7 +115,10 @@ const TheWork = ()=> {
     filenameSet(false);
     boardSet(undefined);
     placeSet(undefined);
+    loadSet(undefined);
     partsSet(undefined);
+    yamBulkSet(undefined);
+    advBulkSet(undefined);
     errorSet(undefined);
   }
 
@@ -79,6 +127,7 @@ const TheWork = ()=> {
     
       let printableElement = document.createElement('iframe');
       printableElement.setAttribute('id', "printFrame");
+      printableElement.setAttribute('style', "display: none");
 
       document.body.appendChild(printableElement);
 
@@ -86,153 +135,19 @@ const TheWork = ()=> {
       let printArea = printframe.contentWindow.document.getElementsByTagName("HTML")[0];
 
       printArea.innerHTML = htmlString;
-
+      
       printframe.contentWindow.focus();
       printframe.contentWindow.print();
-
-      printableElement.remove();
+      
+      // cleanup (browser compat)
+      setTimeout(()=> printableElement.remove(),10);
     }else{
       alert('document not found');
     }
   }
-
-  function downBoard() {
-    const bd = boardState;
-    const boardConstruct = `${filenameState}\n\n${bd?.topTitle}\n\n${bd?.subTitle}\n\nBoard\nX\t${bd?.bX}\nY\t${bd?.bY}\nT\t${bd?.bT}\n\nOrgin Offsets\nX\t${bd?.orginX}\nY\t${bd?.orginY}\n\nFiducial Mark Size\nFid1\t${bd?.fMark1}\nFid2\t${bd?.fMark2}\n\nPanel Offsets\n${bd.oDataMap ? bd.oDataMap.map( (line, index)=> {
-      return `${index+1}\t${line?.map( (cell)=> ( `${cell}\t` ) ).join('')}\n`}).join('')
-    : `undefined\n`}\nBad Mark\n${bd?.lBadX ? `Global\t${bd?.gBadX}\t${bd?.gBadY}\nLocal\t${bd?.lBadX}\t${bd?.lBadY}\n` 
-    : `undefined\n`}`;
-
-    if( typeof document !== 'undefined' ) {
-      let link = document.createElement("a");
-      link.setAttribute('download', `${filenameState}_board.txt`);
-      link.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(boardConstruct)}`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }else{
-      alert('document not found');
-    }
-  }
-
-  function printBoard() {
-    const tbSy = "width:50%; border-collapse:collapse";
-    const hclSy = "border: 1px solid black; text-align: left;";
-    const clSy = "border: 1px solid black; text-align: right;";
-    const bd = boardState;
-    const brdHTML =
-      `<div>
-        <h2>${filenameState}</h2>
-        <h3>${bd?.topTitle}</h3>
-        <h3>${bd?.subTitle}</h3>
-        <table style="${tbSy}">
-          <tr><th colspan="2" style="${hclSy}">Board</th><tr>
-          <tr><td style="${clSy}">X</td><td style="${clSy}"><big>${bd?.bX}</big></td></tr>
-          <tr><td style="${clSy}">Y</td><td style="${clSy}"><big>${bd?.bY}</big></td></tr>
-          <tr><td style="${clSy}">T</td><td style="${clSy}"><big>${bd?.bT}</big></td></tr>
-          <tr><th colspan="2" style="${hclSy}">Orgin Offsets</th><tr>
-          <tr><td style="${clSy}">X</td><td style="${clSy}"><big>${bd?.orginX}</big></td></tr>
-          <tr><td style="${clSy}">Y</td><td style="${clSy}"><big>${bd?.orginY}</big></td></tr>
-          <tr><th colspan="2" style="${hclSy}">Fiducial Mark Size</th><tr>
-          <tr><td style="${clSy}">Fid1</td><td style="${clSy}"><big>${bd?.fMark1}</big></td></tr>
-          <tr><td style="${clSy}">Fid2</td><td style="${clSy}"><big>${bd?.fMark2}</big></td></tr>
-        </table>
-        <br />
-        <table style="${tbSy}">
-          <tr><th colspan="4" style="${hclSy}">Panel Offsets</th><tr>
-          ${bd.oDataMap ? bd.oDataMap.map(function (line, index) {
-            return `<tr>
-            <td>${index+1}</td>
-              ${line?.map(function (cell) {
-                return `<td style="${clSy}"><big>${cell}</big></td>`;
-              }).join('')
-            }</tr>`;
-          }).join('')
-          : `<tr><td colspan='4'>undefined</td></tr>`}
-        </table>
-        <br />
-        <table style="${tbSy}">
-          <tr><th colspan="3" style="${hclSy}">Bad Mark</th></tr>
-          ${bd?.lBadX ? `<tr>
-            <td style="${clSy}">Global</td>
-            <td style="${clSy}"><big>${bd?.gBadX}</big></td>
-            <td style="${clSy}"><big>${bd?.gBadY}</big></td>
-          </tr>
-          <tr>
-            <td style="${clSy}">Local</td>
-            <td style="${clSy}"><big>${bd?.lBadX}</big></td>
-            <td style="${clSy}"><big>${bd?.lBadY}</big></td>
-          </tr>`
-          : "<tr><td colspan='3'>undefined</td></tr>"}
-        </table>
-      </div>`;
-    
-    printTextThing(brdHTML);
-  }
-
-  function downPnP() {
-    const pnpConstruct = placeState?.join("\n");
-
-    if( typeof document !== 'undefined' ) {
-      let link = document.createElement("a");
-      link.setAttribute('download', `${filenameState}_pick-place.csv`);
-      link.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(pnpConstruct)}`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }else{
-      alert('document not found');
-    }
-  }
-
-  function printPnP() {
-    const tbSy = "width:75%; border-collapse:collapse";
-    const clSy = "border: 1px solid black; text-align: right;";
-    const pnpHTML =
-      `<div>
-        <h2>${filenameState}</h2>
-        <table style="${tbSy}">
-          ${placeState?.map( (line, index)=> {
-            return `<tr>
-            <td>${index+1}</td>
-              ${line?.map( (cell)=> {
-                return `<td style="${clSy}"><big>${cell}</big></td>`;
-              }).join('')
-            }</tr>`;
-          }).join('')}
-        </table>
-      </div>`;
-    
-    printTextThing(pnpHTML);
-  }
-
-  function downParts() {
-    const partsConstruct = partsState.join("\n");
-
-    if( typeof document !== 'undefined' ) {
-      let link = document.createElement("a");
-      link.setAttribute('download', `${filenameState}_parts-list.txt`);
-      link.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(partsConstruct)}`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }else{
-      alert('document not found');
-    }
-  }
-
-  function printParts() {
-    const pnpHTML =
-      `<div>
-        <h2>${filenameState}</h2>
-        ${partsState.map( (line)=> ( 
-          `<p>${line}</p>` ) 
-        ).join('')}
-      </div>`;
-    
-    printTextThing(pnpHTML);
-  }
-
+  
+  errorState && console.error(errorState);
+  
   return(
     <Fragment>
       {errorState ?
@@ -256,43 +171,78 @@ const TheWork = ()=> {
           <div className='outputLine'>
             <b>Board</b>
             <span>
-              <DownloadButton 
-                bID='doBoardDown'
-                downFunc={(e)=>downBoard(e)} />
               <PrintButton 
                 pID='doBoardPrint'
-                printFunc={(e)=>printBoard(e)} />
+                printFunc={(e)=>printBoard(filenameState, boardState, printTextThing)} />
+              <DownloadButton 
+                bID='doBoardDown'
+                downFunc={(e)=>downBoard(filenameState, boardState)} />
             </span>
           </div>
 
           <div className='outputLine'>
             <b>Pick<wbr />'n'<wbr/>Place</b>
             <span>
-              <DownloadButton
-                bID='doPnpDown'
-                downFunc={(e)=>downPnP(e)} />
               <PrintButton 
                 pID='doPnpPrint'
-                printFunc={(e)=>printPnP(e)} />
+                printFunc={(e)=>printPnP(filenameState, placeState, printTextThing)} />
+              <DownloadButton
+                bID='doPnpDown'
+                downFunc={(e)=>downPnP(filenameState, placeState)} />
             </span>
           </div>
 
           <div className='outputLine'>
             <b>Parts List</b>
             <span>
-              <DownloadButton 
-                bID='doPartsDown'
-                downFunc={(e)=>downParts(e)} />
               <PrintButton 
                 pID='doPartsPrint'
-                printFunc={(e)=>printParts(e)} />
+                printFunc={(e)=>printParts(filenameState, partsState, printTextThing)} />
+              <DownloadButton 
+                bID='doPartsDown'
+                downFunc={(e)=>downParts(filenameState, partsState)} />
             </span>
           </div>
+          
+          {loadState &&
+            <div className='outputLine' key="yamahasigmaload">
+              <b>Load Sheet</b>
+              <span>
+                <PrintButton 
+                  pID='doLoadPrint'
+                  printFunc={(e)=>printLoad(filenameState, loadState, printTextThing)} />
+                <DownloadButton 
+                  bID='doLoadDown'
+                  downFunc={(e)=>downLoad(filenameState, loadState)} />
+              </span>
+            </div>
+          }
+          
+          {yamBulkState &&
+            <div className='outputLine'>
+              <b>Sigma .psa</b>
+              <span>
+                <DownloadButton 
+                  bID={filenameState + 'doSigmaDown'}
+                  downFunc={(e)=>downSigma(filenameState, yamBulkState)} />
+              </span>
+            </div>
+          }
+          {advBulkState &&
+            <div className='outputLine'>
+              <b>Advantis .ci2</b>
+              <span>
+                <DownloadButton 
+                  bID={filenameState + 'doAdvantisDown'}
+                  downFunc={(e)=>downAdvantis(filenameState, advBulkState)} />
+              </span>
+            </div>
+          }
 
           <BackButton clearFileThing={clearFileThing} />
         </div>
       :
-        <div className='centre dropZone' id='drop-area' title="Open .PGA File">
+        <div className='centre dropZone' id='drop-area' title="Open .PGA or .PSA File">
           
           <label 
             htmlFor='fileClickInput'
@@ -305,10 +255,9 @@ const TheWork = ()=> {
               width="75%" viewBox="0 0 32 32">
                 <path d="M 6 3 L 6 29 L 26 29 L 26 9.59375 L 25.71875 9.28125 L 19.71875 3.28125 L 19.40625 3 Z M 8 5 L 18 5 L 18 11 L 24 11 L 24 27 L 8 27 Z M 20 6.4375 L 22.5625 9 L 20 9 Z"/>
             </svg>
-
             <input
               type='file'
-              accept='.PGA'
+              accept='.PGA, .PSA'
               multiple={false}
               onInput={(e)=>getFileThing(e)}
               id='fileClickInput'

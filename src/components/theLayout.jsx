@@ -10,13 +10,14 @@ const TheLayout = ()=> {
   return(
     <Fragment>
       <header>
-        <h1>PGA<sup>2</sup>CSV</h1> 
+        <h1>SMT Extractor</h1>
       </header>
       <main>
         {backgroundState ?
           <section>
             <button 
               id="byeBttn"
+              title="close"
               className='navAction stickyNav'
               onClick={()=>backgroundSet(false)}>
               <svg 
@@ -28,13 +29,14 @@ const TheLayout = ()=> {
             </button>
           
             <h3>Information</h3>
-            <p>PGA<sup>2</sup>CSV is a utility to convert a PGA file back into simple text files.
-              The placement locations are converted into a formatted pick and place CSV file. The overall board information 
-              and parts list are converted into plain text files.
+            <p>SMT Extractor (aka SMT×, formerly PGA<sup>2</sup>CSV) is a utility to convert PGA and PSA files.
+              The placement locations are converted into a machine readable pick and place CSV file. The overall board information, parts list and load sheet are converted into human optimized plain text files. Sigma conversion is saved as a `.psa` file that can be opened by NT-100 or transfered to a Yamaha Sigma machine; the program will need to be optimized with NT-100 or on machine before it will run. Advantis conversion is saved as a `.ci2` file that can be imported by the UIC Advantis 'Product Editor' or 'Comprehensive Import'. Components are not included in the `.ci2` file, they will need to be added with the Pick'n'Place file and UIC Advantis' 'CAD Import'; the program will need to be optimized on machine before it will run. (ci2 files are compatible with many other modern UIC machines but not GSMs running OS/2.)
             </p>
-            <p>Input files must be formatted as UTF-8 text files with a `.pga` extension. Reliable results 
-              should only be expected with program files optimized for Hitachi GXH Series machines.</p>
-            <p>Downloaded output files are formatted as UTF-8 text files with a `.csv` or `.txt` extension.</p>
+            <h4>Import</h4>
+            <p>Input files must be formatted as UTF-8 text files with a `.pga` or `.psa` extension. Reliable results 
+              should only be expected with program files formatted for Hitachi GXH-1S or Yamaha Sigma GS5II machines.</p>
+            <h4>Export</h4>
+            <p>Downloaded output files are formatted as UTF-8 text files with a `.csv`, `.txt`, `.psa` or `.ci2` extension.</p>
             <p>Printed output is generated as html for the browser's print utility. After the printer utility 
               is closed the generated content is destroyed.</p>
             <h4>Privacy</h4>
@@ -71,6 +73,7 @@ const TheLayout = ()=> {
       <footer>
         <button 
           id="heloBttn"
+          title="Information"
           className='navAction'
           onClick={()=>backgroundSet(true)}>
           <svg 
@@ -82,7 +85,7 @@ const TheLayout = ()=> {
               <path d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z"/>
           </svg>
         </button>
-        <span>Commutron Industries Ltd. ©2021</span>
+        <span>Commutron Industries Ltd. ©2023</span>
       </footer>
     </Fragment>
   );
